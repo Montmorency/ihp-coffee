@@ -60,4 +60,4 @@ instance Controller CoffeesController where
         redirectTo CoffeesAction
 
 buildCoffee coffee = coffee
-    |> fill @["title","body","labels"]
+    |> fill @["title","body","labels","coffeeType"]
