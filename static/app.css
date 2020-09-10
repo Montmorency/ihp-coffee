@@ -1,0 +1,107 @@
+@import "/footer.css";
+
+* {
+    -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+    color: #073642;
+}
+
+.coffee, .new-comment, .comment, .topic {
+    max-width: 660px;
+}
+
+.coffee .coffee-title, .topic .topic-title {
+    font-size: 1.5rem;
+    color: #073642;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-weight: 600;
+}
+
+.coffee .coffee-body {
+    color: hsla(192, 81%, 14%, 85%);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.topic .topic-description {
+    color: hsla(192, 81%, 14%, 85%);
+    display: block;
+}
+
+.coffee-action-link a {
+    font-size: 0.8rem;
+    color: #839496;
+    margin-left: 0.5rem;
+}
+
+.coffee .coffee-created-at a {
+    font-size: 0.8rem;
+    color: #839496;
+    margin-left: 0.5rem;
+}
+
+.coffee-picture {
+    width: 64px;
+    height: 64px;
+}
+
+.coffee .coffee-picture {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.coffees .coffee {
+    background-color: hsla(192, 81%, 5%, 0.04);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+textarea {
+    min-height: 8rem;
+}
+
+#users-new {
+    max-width: 600px;
+}
+
+.comment .comment-body {
+    background-color: hsla(192, 81%, 5%, 0.04);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.comment {
+    margin-bottom: 3rem;
+}
+
+.comment .comment-meta, .comment .comment-meta a {
+    margin-bottom: 0.25rem;
+    font-size: 0.6rem;
+}
+
+.comment .comment-meta a {
+    margin-left: 0.5rem;
+}
+
+.user-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: hsla(192, 81%, 26%, 0.8);
+}
+
+.topic {
+    margin-bottom: 2rem;
+}

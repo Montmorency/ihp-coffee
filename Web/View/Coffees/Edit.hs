@@ -18,7 +18,7 @@ instance View EditView ViewContext where
 renderForm :: Coffee -> Html
 renderForm coffee = formFor coffee [hsx|
     {textField #title}
-    {textField #body}
+    {textareaField #body}
     {textField #labels}
     {submitButton}
 |]
