@@ -5,7 +5,12 @@ data ShowView = ShowView { coffee :: Coffee }
 
 instance View ShowView ViewContext where
     html ShowView { .. } = [hsx|
-        <h1>Coffee</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href={CoffeesAction}>St. James's Street</a></li>
+                <li class="breadcrumb-item active" aria-current="page">IHP Cafe</li>
+            </ol>
+        </nav>
         <div class="row thread">
             <div class="col-3 user-col">
                 <a class="user-col" href="#">
