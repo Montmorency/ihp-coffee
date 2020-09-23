@@ -20,7 +20,7 @@ data CoffeesController
     = CoffeesAction
     | NewCoffeeAction
     | ShowCoffeeAction { coffeeId :: !(Id Coffee) }
-    | ShowTodaysCoffeeAction { coffeeId :: !(Id Coffee) }
+    | TodaysCoffeeAction 
     | CreateCoffeeAction
     | EditCoffeeAction { coffeeId :: !(Id Coffee) }
     | UpdateCoffeeAction { coffeeId :: !(Id Coffee) }

@@ -12,10 +12,8 @@ instance View ShowView ViewContext where
             </ol>
         </nav>
         <div class="row thread">
-            <div class="col-3 user-col">
-                <a class="user-col" href="#">
-                    Picture of {get #coffeeType coffee}
-                </a>
+            <div class="col-3 coffee-col">
+                <img src={(tshow (get #coffeeType coffee))++".svg"} alt={tshow (get #coffeeType coffee)} width="100%" height="100%">
             </div>
             <div class="col-9">
                 <div class="text-muted thread-created-at">

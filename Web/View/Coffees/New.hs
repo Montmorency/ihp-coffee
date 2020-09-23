@@ -12,10 +12,11 @@ instance View NewView ViewContext where
 
 renderForm :: Coffee -> Html
 renderForm coffee = formFor coffee [hsx|
-    {textField #title}
-    {(textareaField #body) {helpText = "(markdown enabled.)"} }
-    {selectField #coffeeType coffeetypes}
-    {submitButton}
+    { textField #title }
+    { (textareaField #body) {helpText = "(markdown enabled.)"} }
+    { selectField #coffeeType coffeetypes }
+    { dateField #lastDrank }
+    { submitButton }
 |]
     where 
         coffeetypes :: [Coffeetype]
@@ -23,8 +24,6 @@ renderForm coffee = formFor coffee [hsx|
                         Espresso, FlatWhite, Glace, Lungo, 
                         EspressoRomano, IcedCoffee, Marochino, Freddo, Mocha]
 
---struggling with selectField...
---{selectField #coffeeType Coffeetype}
 instance CanSelect Coffeetype where
     type SelectValue Coffeetype = Coffeetype
     selectValue value = value 

@@ -12,10 +12,7 @@ import IHP.Welcome.Controller
 
 instance FrontController WebApplication where
     controllers = 
-        [ startPage CoffeesAction
-        -- Generator Marker
-        , parseRoute @CommentsController
-        , parseRoute @UsersController
+        [ startPage TodaysCoffeeAction
         , parseRoute @CoffeesController
         ]
 

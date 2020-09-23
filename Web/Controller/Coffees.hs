@@ -12,8 +12,10 @@ instance Controller CoffeesController where
             |> fetch
         render IndexView { .. }
 
-    action ShowTodaysCoffeeAction { coffeeId } = do
-        coffee <- fetch coffeeId
+    action TodaysCoffeeAction  = do
+        coffee <- query @ Coffee
+            |> orderBy #lastDrank
+            |> fetchOne
         render ShowView { .. }
 
     action NewCoffeeAction = do

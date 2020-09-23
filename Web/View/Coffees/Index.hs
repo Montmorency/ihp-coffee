@@ -11,8 +11,10 @@ instance View IndexView ViewContext where
 
 renderCoffee coffee = [hsx|
     <div class="row coffee">
-        <div class="col-9">
+        <div class="col-3">
         <span class="ml-1 text-muted"> {get #coffeeType coffee} </span>
+        </div>
+        <div class="col-6">
         <a class="coffee-title" href={ShowCoffeeAction (get #id coffee)}> {get #title coffee} </a>
         </div>
         <div class="col-1">

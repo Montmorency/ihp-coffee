@@ -6,7 +6,8 @@ CREATE TABLE coffees (
     body TEXT NOT NULL,
     labels TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-    coffee_type coffeetypes NOT NULL
+    coffee_type coffeetypes NOT NULL,
+    last_drank DATE NOT NULL
 );
 CREATE TABLE users (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
