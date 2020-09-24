@@ -1,7 +1,7 @@
 nix package for RSA required by req:
-https://gist.github.com/mpscholten/b4c88c5e18b67a70c247d0312cc02094
+    https://gist.github.com/mpscholten/b4c88c5e18b67a70c247d0312cc02094
 Then the instruction for including a new package.
-https://ihp.digitallyinduced.com/Guide/package-management.html#using-a-different-version-of-a-haskell-package
+    https://ihp.digitallyinduced.com/Guide/package-management.html#using-a-different-version-of-a-haskell-package
 
 Which essentiall boils down to installing cabal2nix
 

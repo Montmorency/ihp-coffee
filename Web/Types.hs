@@ -16,6 +16,9 @@ data ViewContext = ViewContext
     , layout :: Layout
     }
 
+--data DeployController = TodaysCoffeeAction
+--                            deriving (Eq,Show,Data)
+
 data CoffeesController
     = CoffeesAction
     | NewCoffeeAction

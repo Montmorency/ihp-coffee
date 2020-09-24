@@ -6,6 +6,7 @@ import Web.View.Coffees.New
 import Web.View.Coffees.Edit
 import Web.View.Coffees.Show
 
+
 instance Controller CoffeesController where
     action CoffeesAction = do
         coffees <- query @Coffee 
@@ -18,14 +19,14 @@ instance Controller CoffeesController where
             |> fetchOne
         render ShowView { .. }
 
-    action NewCoffeeAction = do
-        let coffee = newRecord
-        render NewView { .. }
+--    action NewCoffeeAction = do
+--        let coffee = newRecord
+--        render NewView { .. }
 
     action ShowCoffeeAction { coffeeId } = do
         coffee <- fetch coffeeId
         render ShowView { .. }
-
+{--
     action EditCoffeeAction { coffeeId } = do
         coffee <- fetch coffeeId
         render EditView { .. }
@@ -60,6 +61,7 @@ instance Controller CoffeesController where
         deleteRecord coffee
         setSuccessMessage "Coffee deleted"
         redirectTo CoffeesAction
+--}
 
 buildCoffee coffee = coffee
     |> fill @["title","body","labels","coffeeType"]
