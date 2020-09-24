@@ -7,7 +7,7 @@ instance View ShowView ViewContext where
     html ShowView { .. } = [hsx|
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href={CoffeesAction}>St. James's Street</a></li>
+                <li class="breadcrumb-item"><a href={StJamesStreetAction}>St. James's Street</a></li>
                 <li class="breadcrumb-item active" aria-current="page">IHP Cafe</li>
             </ol>
         </nav>
@@ -17,7 +17,7 @@ instance View ShowView ViewContext where
             </div>
             <div class="col-9">
                 <div class="text-muted thread-created-at">
-                    {get #createdAt coffee |> timeAgo}
+                    {get #lastDrank coffee}
                 </div>
                 <h1 class="coffee-title">{get #title coffee}</h1>
                 <p class="coffee-body">{get #body coffee |> renderMarkdown}</p>

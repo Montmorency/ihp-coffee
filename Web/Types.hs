@@ -46,3 +46,8 @@ data CommentsController
     | UpdateCommentAction { commentId :: !(Id Comment) }
     | DeleteCommentAction { commentId :: !(Id Comment) }
     deriving (Eq, Show, Data)
+
+data StaticController
+    = StJamesStreetAction
+        deriving (Eq, Show, Data)
+

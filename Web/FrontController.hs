@@ -8,12 +8,15 @@ import Web.Types
 import Web.Controller.Comments
 import Web.Controller.Users
 import Web.Controller.Coffees
+import Web.Controller.Static
+
 import IHP.Welcome.Controller
 
 instance FrontController WebApplication where
     controllers = 
         [ startPage TodaysCoffeeAction
         , parseRoute @CoffeesController
+        , parseRoute @StaticController
         ]
 
 instance InitControllerContext WebApplication
