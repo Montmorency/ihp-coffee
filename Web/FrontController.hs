@@ -11,6 +11,7 @@ import Web.Controller.Coffees
 import Web.Controller.Static
 
 import IHP.Welcome.Controller
+import IHP.LoginSupport.Middleware
 
 instance FrontController WebApplication where
     controllers = 

@@ -1,23 +1,15 @@
-module Web.Controller.Coffees where
+module Admin.Controller.Coffees where
 
-import Web.Controller.Prelude
-import Web.View.Coffees.Index
-import Web.View.Coffees.New
-import Web.View.Coffees.Edit
-import Web.View.Coffees.Show
-
+import Admin.Controller.Prelude
+import Admin.View.Coffees.Index
+import Admin.View.Coffees.New
+import Admin.View.Coffees.Edit
+import Admin.View.Coffees.Show
 
 instance Controller CoffeesController where
     action CoffeesAction = do
-        coffees <- query @Coffee 
-            |> fetch
+        coffees <- query @Coffee |> fetch
         render IndexView { .. }
-
-    action TodaysCoffeeAction  = do
-        coffee <- query @ Coffee
-            |> orderBy #lastDrank
-            |> fetchOne
-        render ShowView { .. }
 
     action NewCoffeeAction = do
         let coffee = newRecord
@@ -47,13 +39,11 @@ instance Controller CoffeesController where
         coffee
             |> buildCoffee
             |> ifValid \case
-                Left coffee -> do
-                    render NewView { .. } 
+                Left coffee -> render NewView { .. } 
                 Right coffee -> do
                     coffee <- coffee |> createRecord
                     setSuccessMessage "Coffee created"
-                    let coffeeId = get #id coffee
-                    redirectTo ShowCoffeeAction {coffeeId}
+                    redirectTo CoffeesAction
 
     action DeleteCoffeeAction { coffeeId } = do
         coffee <- fetch coffeeId
@@ -62,4 +52,4 @@ instance Controller CoffeesController where
         redirectTo CoffeesAction
 
 buildCoffee coffee = coffee
-    |> fill @["title","body","labels","coffeeType"]
+    |> fill @["title","body","labels","coffeeType","lastDrank"]
