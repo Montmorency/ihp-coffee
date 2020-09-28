@@ -13,7 +13,7 @@ instance View ShowView ViewContext where
         </nav>
         <div class="row thread">
             <div class="col-3 coffee-col">
-                <object data= {(tshow (get #coffeeType coffee)) <> ".svg"} type="image/svg+xml"> </object>
+                  <img src= {(tshow (get #coffeeType coffee)) <> ".svg"}/>
             </div>
             <div class="col-9">
                 <div class="text-muted thread-created-at">
@@ -30,4 +30,4 @@ instance View ShowView ViewContext where
     </footer>
     |]
 
---  <img src= {(tshow (get #coffeeType coffee)) <> ".svg"}/>
+-- <object data= {(tshow (get #coffeeType coffee)) <> ".svg"} type="image/svg+xml"> </object>
