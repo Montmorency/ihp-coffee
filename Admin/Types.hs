@@ -35,4 +35,14 @@ data SessionsController
      deriving (Eq, Show, Data)
 
 instance HasNewSessionUrl Admin where
-    newSessionUrl _ = "/NewSession"
+    newSessionUrl admin = "/admin/NewSession"
+
+data AdminsController
+    = AdminsAction
+    | NewAdminAction
+    | ShowAdminAction { adminId :: !(Id Admin) }
+    | CreateAdminAction
+    | EditAdminAction { adminId :: !(Id Admin) }
+    | UpdateAdminAction { adminId :: !(Id Admin) }
+    | DeleteAdminAction { adminId :: !(Id Admin) }
+    deriving (Eq, Show, Data)

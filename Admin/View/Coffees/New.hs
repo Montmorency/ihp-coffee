@@ -1,26 +1,31 @@
 module Admin.View.Coffees.New where
-import Admin.View.Prelude
+import Admin.View.Prelude --exports Generated.Types
+import Data.Data
 
 data NewView = NewView { coffee :: Coffee }
 
 instance View NewView ViewContext where
     html NewView { .. } = [hsx|
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href={CoffeesAction}>Coffees</a></li>
-                <li class="breadcrumb-item active">New Coffee</li>
-            </ol>
-        </nav>
         <h1>New Coffee</h1>
         {renderForm coffee}
     |]
 
 renderForm :: Coffee -> Html
 renderForm coffee = formFor coffee [hsx|
-    {textField #title}
-    {textField #body}
-    {textField #labels}
-    {textField #coffeeType}
-    {textField #lastDrank}
-    {submitButton}
+    { textField #title }
+    { (textareaField #body) {helpText = "(markdown enabled.)"} }
+    { selectField #coffeeType coffeetypes }
+    { dateField #lastDrank }
+    { submitButton }
 |]
+    where 
+        coffeetypes :: [Coffeetype]
+        coffeetypes =  [Americano, Latte, IrishCoffee, Cappuccino, 
+                        Espresso, FlatWhite, Glace, Lungo, 
+                        EspressoRomano, IcedCoffee, Marochino, Freddo, Mocha]
+
+instance CanSelect Coffeetype where
+    type SelectValue Coffeetype = Coffeetype
+    selectValue value = value 
+    selectLabel = tshow
+    

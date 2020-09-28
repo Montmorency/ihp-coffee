@@ -1,5 +1,6 @@
 module Application.Helper.View (
-    module IHP.LoginSupport.Helper.View, renderMarkdown
+    module IHP.LoginSupport.Helper.View, renderMarkdown,
+           currentAdmin, currentAdminOrNothing
 ) where
 
 -- Here you can add functions which are available in all your views
@@ -22,3 +23,10 @@ renderMarkdown text =
                 |> MMark.render
                 |> tshow
                 |> preEscapedToHtml
+
+
+currentAdmin :: (?viewContext :: viewContext, HasField "admin" viewContext (Maybe admin)) => admin
+currentAdmin = fromMaybe (error "Application.Helper.View.currentAdmin: Not logged in") currentAdminOrNothing
+
+currentAdminOrNothing :: (?viewContext :: viewContext, HasField "admin" viewContext (Maybe admin)) => Maybe admin
+currentAdminOrNothing = getField @"admin" ?viewContext 

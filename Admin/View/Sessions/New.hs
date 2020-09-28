@@ -2,7 +2,7 @@ module Admin.View.Sessions.New where
 import Admin.View.Prelude
 import IHP.AuthSupport.View.Sessions.New 
 
---data NewView user = NewView { user :: user } deriving (Typeable)
+--data NewView admin = NewView { admin :: admin } deriving (Typeable)
 
 instance View (NewView Admin) ViewContext where
     html NewView { .. } = [hsx|

@@ -1,12 +1,16 @@
 module Admin.Controller.Coffees where
 
 import Admin.Controller.Prelude
+
 import Admin.View.Coffees.Index
 import Admin.View.Coffees.New
 import Admin.View.Coffees.Edit
 import Admin.View.Coffees.Show
+import Admin.View.Sessions.New
 
 instance Controller CoffeesController where
+    beforeAction = ensureIsAdmin @Admin
+
     action CoffeesAction = do
         coffees <- query @Coffee |> fetch
         render IndexView { .. }

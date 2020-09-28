@@ -9,3 +9,7 @@ instance AutoRoute SessionsController
 
 type instance ModelControllerMap AdminApplication Coffee = CoffeesController
 
+
+instance AutoRoute AdminsController
+type instance ModelControllerMap AdminApplication Admin = AdminsController
+

@@ -10,5 +10,5 @@ instance Controller SessionsController where
     action DeleteSessionAction = Sessions.deleteSessionAction @Admin
 
 instance Sessions.SessionsControllerConfig Admin where
-    afterLoginRedirectPath = "/"
+    afterLoginRedirectPath = "/admin/Coffees"
 

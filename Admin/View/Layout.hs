@@ -26,11 +26,56 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
 </head>
 <body>
     <div class="container mt-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <a class="navbar-brand" href="#">λ IHP-Cafe</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                    data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" 
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" 
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Links
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {renderLoggedInAs currentAdminOrNothing}
+        </nav>
+
         {renderFlashMessages}
         {inner}
     </div>
 </body>
 |]
+
+renderLoggedInAs :: Maybe Admin -> Html
+renderLoggedInAs (Just admin) = [hsx|
+<div class="navbar-nav">
+    <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Logged in as: {get #name admin}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item js-delete js-delete-no-confirm" href={DeleteSessionAction}>Logout</a>
+        </div>
+    </div>
+</div> 
+|]
+
+renderLoggedInAs Nothing = [hsx|
+<div class="navbar-nav">
+    <div class="nav-item">
+        <a class="nav-link" href={NewSessionAction}>Login</a>
+    </div>
+</div> 
+|]
+
 
 stylesheets = do
     when (isDevelopment FrameworkConfig.environment) [hsx|

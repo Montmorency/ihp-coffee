@@ -18,9 +18,19 @@ instance View EditView ViewContext where
 renderForm :: Coffee -> Html
 renderForm coffee = formFor coffee [hsx|
     {textField #title}
-    {textField #body}
+    {textareaField #body}
     {textField #labels}
-    {textField #coffeeType}
-    {textField #lastDrank}
+    {selectField #coffeeType coffeetypes}
     {submitButton}
 |]
+    where 
+        coffeetypes :: [Coffeetype]
+        coffeetypes =  [Americano, Latte, IrishCoffee, Cappuccino, 
+                        Espresso, FlatWhite, Glace, Lungo, 
+                        EspressoRomano, IcedCoffee, Marochino, Freddo, Mocha]
+
+instance CanSelect Coffeetype where
+    type SelectValue Coffeetype = Coffeetype
+    selectValue value = value 
+    selectLabel = tshow
+    

@@ -5,34 +5,23 @@ data IndexView = IndexView { coffees :: [Coffee] }
 
 instance View IndexView ViewContext where
     html IndexView { .. } = [hsx|
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href={CoffeesAction}>Coffees</a></li>
-            </ol>
-            <a href={NewSessionAction}>Login</a>
-        </nav>
-        <h1>Index <a href={pathTo NewCoffeeAction} class="btn btn-primary ml-4">+ New</a></h1>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Coffee</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>{forEach coffees renderCoffee}</tbody>
-            </table>
-        </div>
+        <h1>Coffees <a href={pathTo NewCoffeeAction} class="btn btn-primary ml-4">+ New</a></h1>
+        <div class="coffees">{forEach coffees renderCoffee}</div>
     |]
 
-
 renderCoffee coffee = [hsx|
-    <tr>
-        <td>{coffee}</td>
-        <td><a href={ShowCoffeeAction (get #id coffee)}>Show</a></td>
-        <td><a href={EditCoffeeAction (get #id coffee)} class="text-muted">Edit</a></td>
-        <td><a href={DeleteCoffeeAction (get #id coffee)} class="js-delete text-muted">Delete</a></td>
-    </tr>
+    <div class="row coffee">
+        <div class="col-3">
+        <span class="ml-1 text-muted"> {get #coffeeType coffee} </span>
+        </div>
+        <div class="col-6">
+        <a class="coffee-title" href={ShowCoffeeAction (get #id coffee)}> {get #title coffee} </a>
+        </div>
+        <div class="col-1">
+        <a class="coffee-action-link" href={EditCoffeeAction (get #id coffee)}> Edit </a>
+        </div>
+        <div class="col-1">
+        <a class="coffee-action-link" href={DeleteCoffeeAction (get #id coffee)}> Delete </a>
+        </div>
+    </div>
 |]
