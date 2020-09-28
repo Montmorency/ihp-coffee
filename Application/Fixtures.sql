@@ -16,6 +16,7 @@ SET SESSION AUTHORIZATION DEFAULT;
 
 ALTER TABLE public.admins DISABLE TRIGGER ALL;
 
+INSERT INTO public.admins (id, email, password_hash, locked_at, failed_login_attempts, name) VALUES ('d17e8e04-52ec-4539-8151-94575b3c9f79', 'lamberh@tcd.ie', 'sha256|17|QbTKQ6mw5pKRGR+NI0SW/Q==|u/sl4eJzQnmBw++OdXHivLVRkYtlfhB6LrhCZzB1fEY=', NULL, 0, 'Henry');
 
 
 ALTER TABLE public.admins ENABLE TRIGGER ALL;
@@ -23,55 +24,6 @@ ALTER TABLE public.admins ENABLE TRIGGER ALL;
 
 ALTER TABLE public.coffees DISABLE TRIGGER ALL;
 
-INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('fd805872-7c71-41b7-b892-39f1d84736be', 'The Question Mark: ?', 'All variables starting with `?` are implicit parameters that are
-passed around by adding constraints to function signatures. The
-RequestContext is defined as:
-
-```haskell
-data RequestContext = RequestContext
-    { request :: Request
-    , respond :: Respond
-    , params :: [Param]
-    , files :: [File LBS.ByteString]
-    , vault :: (Vault.Key (Session IO String String))
-    }
-```
-
-When a type signature for an IHP function has a constraint`(?requestContext::RequestContext)` you know it holds references
-to the wai request, request parameters, file uploads etc.', '', '2020-09-24 14:26:40.761952+01', 'espresso', '1858-11-17');
-INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('f8b9f3a0-84ec-46b1-aab7-3dd1d47a11f8', 'Mos Def Not Think So', 'There is a Haskell module called Data.Default which defines
-a type class:
-```haskell
-class Default a where
-...
-```
-IHP defines a number of Default instances appropriate for different records fields e.g. an empty string for text fields:
-```
-instance Default Text where
-   def = ""
-```
-and default Truth values for Bools.
-```
-instance Default Bool where
-    def = False
-```
-
-in IHP, to help with form validation, Records often have a `Metabag` field which can be defined with a slightly fancier default:
-```
-instance Default MetaBag where
-    def = MetaBag { annotations = [], touchedFields = [] }
-```
-
-for the MetaBag type:
-
-```
-data MetaBag = MetaBag
-  { annotations :: [(Text, Text)]
-  , touchedFields :: [Text]
-  } deriving (Eq, Show)
-```
-
-The defaults make it easy to populate a new record''s fields.', '', '2020-09-24 14:31:56.476449+01', 'irish_coffee', '1858-11-17');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('79e20290-1885-472b-97fd-1e3f3be2059d', 'PostGres ENUM and Select Fields.', 'In a relational database a row entry might have a field with values that are restricted to a small set of options. For instance we might have a Cafe that only serves certain Types of Coffee ( we are capitalizing names that will form the data in a computer program). For accounting purposes the Cafe wants to log each sale with a Type of Coffee value selected from an enumerated list. PostgresSQL supports just such an enumerated data type. It is called an ENUM and a table entry might look like this:
 
 ```
@@ -111,6 +63,77 @@ coffeetypes =  [Americano, Latte, IrishCoffee, Cappuccino,
                          Espresso, FlatWhite, Glace, Lungo,
                          EspressoRomano, IcedCoffee, Marochino, Freddo, Mocha]
 ```', 'ENUM, selectfields, Forms', '2020-09-23 21:02:55.999273+01', 'latte', '1858-11-17');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('c7353f29-3502-4595-b56a-42462c8a3dff', 'Automatic Sessions', 'IHP gives support for handling User sessions and authentication straight out of the box. The documentation describes the details. Here we''ll just do a quick dive into what happens behind the scenes when you have an IHP Controller instance defined like this:
+
+```haskell
+instance Controller CoffeesController where 
+    beforeAction = ensureIsAdmin @Admin
+```
+This controller logic ensures that all other actions defined in the Controller will only be available to clients that have logged in as an Administrator. 
+The function is defined like this:
+```haskell
+ensureIsAdmin =
+    case currentAdminOrNothing @admin of
+        Just _ -> pure ()
+        Nothing -> redirectToLoginWithMessage (newSessionUrl (Proxy :: Proxy admin))
+```
+If the user is logged in as Admin we have purity and the IO consumes a unit and moves on. If there is no Admin logged in the client is redirected to the newSessionUrl which is typically just a login page. The `newSessionUrl` method was defined (as you''ll see in the documentation) in when you made your `Admin` data type an instance of `HasNewSessionUrl`:
+
+```haskell
+instance HasNewSessionUrl Admin where
+    newSessionUrl admin = "/NewSession"
+```
+
+The way the controller logic and implicit parameters are handled and connected to Views in IHP makes standard authorization/authentication patterns very concise for the programmer to write. ', 'Sessions', '2020-09-28 13:51:37.428757+01', 'americano', '2020-09-08');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('fd805872-7c71-41b7-b892-39f1d84736be', 'The Question Mark: ?', 'All variables starting with `?` are implicit parameters that are
+passed around by adding constraints to function signatures. For example the
+RequestContext is defined as:
+
+```haskell
+data RequestContext = RequestContext
+    { request :: Request
+    , respond :: Respond
+    , params :: [Param]
+    , files :: [File LBS.ByteString]
+    , vault :: (Vault.Key (Session IO String String))
+    }
+```
+
+When a type signature for an IHP function has a constraint`(?requestContext::RequestContext)` you know it holds references
+to the wai request, request parameters, file uploads etc.', 'Implicit Parameters', '2020-09-24 14:26:40.761952+01', 'espresso', '1858-11-17');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('f8b9f3a0-84ec-46b1-aab7-3dd1d47a11f8', 'Mos Def Not Think So', 'There is a Haskell module called Data.Default which defines
+a type class:
+```haskell
+class Default a where
+...
+```
+IHP defines a number of Default instances appropriate for different records fields e.g. an empty string for text fields:
+```
+instance Default Text where
+   def = ""
+```
+and default Truth values for booleans:
+```
+instance Default Bool where
+    def = False
+```
+
+In IHP, mainly to help with form validation, Models have a `Metabag` field which can be defined with a slightly fancier default:
+```
+instance Default MetaBag where
+    def = MetaBag { annotations = [], touchedFields = [] }
+```
+
+that is `MetaBag`records with a type:
+
+```
+data MetaBag = MetaBag
+  { annotations :: [(Text, Text)]
+  , touchedFields :: [Text]
+  } deriving (Eq, Show)
+```
+
+Defaults make it easy to populate a new record''s data fields in the database without have to write too much boilerplate.', 'records, models, defaults', '2020-09-24 14:31:56.476449+01', 'irish_coffee', '1858-11-17');
 
 
 ALTER TABLE public.coffees ENABLE TRIGGER ALL;
