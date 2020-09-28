@@ -15,7 +15,7 @@ CREATE TABLE users (
     email TEXT NOT NULL,
     github_name TEXT NOT NULL,
     password_hash TEXT NOT NULL,
-    locked_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    locked_at TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     failed_login_attempts INT DEFAULT 0 NOT NULL
 );
 CREATE TABLE comments (
@@ -29,7 +29,7 @@ CREATE TABLE admins (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
     email TEXT NOT NULL,
     password_hash TEXT NOT NULL,
-    locked_at TIMESTAMP WITH TIME ZONE DEFAULT '' NOT NULL,
+    locked_at TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     failed_login_attempts INT DEFAULT 0 NOT NULL,
     name TEXT NOT NULL
 );

@@ -14,6 +14,13 @@ SET row_security = off;
 
 SET SESSION AUTHORIZATION DEFAULT;
 
+ALTER TABLE public.admins DISABLE TRIGGER ALL;
+
+
+
+ALTER TABLE public.admins ENABLE TRIGGER ALL;
+
+
 ALTER TABLE public.coffees DISABLE TRIGGER ALL;
 
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('fd805872-7c71-41b7-b892-39f1d84736be', 'The Question Mark: ?', 'All variables starting with `?` are implicit parameters that are

@@ -20,14 +20,14 @@ data ViewContext = ViewContext
 --                            deriving (Eq,Show,Data)
 
 data CoffeesController
-    = CoffeesAction
-    | NewCoffeeAction
-    | ShowCoffeeAction { coffeeId :: !(Id Coffee) }
+    = ShowCoffeeAction { coffeeId :: !(Id Coffee) }
     | TodaysCoffeeAction 
+{--    | CoffeesAction
+    | NewCoffeeAction
     | CreateCoffeeAction
     | EditCoffeeAction { coffeeId :: !(Id Coffee) }
     | UpdateCoffeeAction { coffeeId :: !(Id Coffee) }
-    | DeleteCoffeeAction { coffeeId :: !(Id Coffee) }
+    | DeleteCoffeeAction { coffeeId :: !(Id Coffee) }  --}
     deriving (Eq, Show, Data)
 
 data UsersController

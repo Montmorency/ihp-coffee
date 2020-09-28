@@ -1,17 +1,14 @@
 module Web.Controller.Coffees where
 
 import Web.Controller.Prelude
-import Web.View.Coffees.Index
-import Web.View.Coffees.New
-import Web.View.Coffees.Edit
 import Web.View.Coffees.Show
+
+--import Web.View.Coffees.Index
+--import Web.View.Coffees.New
+--import Web.View.Coffees.Edit
 
 
 instance Controller CoffeesController where
-    action CoffeesAction = do
-        coffees <- query @Coffee 
-            |> fetch
-        render IndexView { .. }
 
     action TodaysCoffeeAction  = do
         coffee <- query @ Coffee
@@ -19,13 +16,19 @@ instance Controller CoffeesController where
             |> fetchOne
         render ShowView { .. }
 
-    action NewCoffeeAction = do
-        let coffee = newRecord
-        render NewView { .. }
-
     action ShowCoffeeAction { coffeeId } = do
         coffee <- fetch coffeeId
         render ShowView { .. }
+
+{-- ONLY ADMIN/Baristas Can changes coffees 
+    action CoffeesAction = do
+        coffees <- query @Coffee 
+            |> fetch
+        render IndexView { .. }
+
+    action NewCoffeeAction = do
+        let coffee = newRecord
+        render NewView { .. }
 
     action EditCoffeeAction { coffeeId } = do
         coffee <- fetch coffeeId
@@ -60,6 +63,7 @@ instance Controller CoffeesController where
         deleteRecord coffee
         setSuccessMessage "Coffee deleted"
         redirectTo CoffeesAction
+--}
 
 buildCoffee coffee = coffee
     |> fill @["title","body","labels","coffeeType"]

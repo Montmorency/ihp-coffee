@@ -1,8 +1,8 @@
 module Admin.View.Sessions.New where
 import Admin.View.Prelude
-import IHP.AuthSupport.View.Sessions.New hiding (NewView)
+import IHP.AuthSupport.View.Sessions.New 
 
-data NewView admin = NewView { admin :: admin } deriving (Typeable)
+--data NewView user = NewView { user :: user } deriving (Typeable)
 
 instance View (NewView Admin) ViewContext where
     html NewView { .. } = [hsx|
@@ -12,7 +12,7 @@ instance View (NewView Admin) ViewContext where
                     <div style="max-width: 400px" class="mx-auto mb-5">
                         {renderFlashMessages}
                         <h5>Please login:</h5>
-                        {renderForm admin}
+                        {renderForm user}
                     </div>
                 </div>
             </div>
@@ -20,10 +20,10 @@ instance View (NewView Admin) ViewContext where
     |]
 
 renderForm :: Admin -> Html
-renderForm admin = [hsx|
+renderForm user = [hsx|
     <form method="POST" action={CreateSessionAction}>
         <div class="form-group">
-            <input name="email" value={get #email admin} type="email" class="form-control" placeholder="E-Mail"/>
+            <input name="email" value={get #email user} type="email" class="form-control" placeholder="E-Mail"/>
         </div>
         <div class="form-group">
             <input name="password" type="password" class="form-control" placeholder="Password"/>
