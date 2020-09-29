@@ -25,7 +25,9 @@ instance View ShowView ViewContext where
         </div>
     <footer style="margin-top: 3rem; background-color: #073642; padding-top: 2rem; padding-bottom: 2rem; color:hsla(196, 13%, 96%, 1)">
         <div class="container">
-            <a href="https://ihpcloud.com/NewUser?referredBy=7dd20a19-773d-4727-a682-f10b078b3da0">Join the IHP Cloud!</a>
+        <a href="https://ihpcloud.com/NewUser?referredBy=7dd20a19-773d-4727-a682-f10b078b3da0">
+            <img src="https://ihpcloud.com/deployed-with-ihp-cloud-blue.svg" alt="Deployed with IHP Cloud"/>
+        </a>
         </div>
     </footer>
     |]
