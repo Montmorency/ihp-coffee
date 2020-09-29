@@ -23,13 +23,11 @@ instance View ShowView ViewContext where
                 <p class="coffee-body">{get #body coffee |> renderMarkdown}</p>
             </div>
         </div>
-    <footer style="margin-top: 3rem; background-color: #073642; padding-top: 2rem; padding-bottom: 2rem; color:hsla(196, 13%, 96%, 1)">
-        <div class="container">
+        <footer>
         <a href="https://ihpcloud.com/NewUser?referredBy=7dd20a19-773d-4727-a682-f10b078b3da0">
-            <img src="https://ihpcloud.com/deployed-with-ihp-cloud-blue.svg" alt="Deployed with IHP Cloud"/>
+         <img src="https://ihpcloud.com/deployed-with-ihp-cloud-blue.svg" alt="Deployed with IHP Cloud" width="240px" height="240px"/>
         </a>
-        </div>
-    </footer>
+        </footer>
     |]
 
 -- <object data= {(tshow (get #coffeeType coffee)) <> ".svg"} type="image/svg+xml"> </object>
