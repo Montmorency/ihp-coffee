@@ -28,6 +28,12 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
         {renderFlashMessages}
         {inner}
     </div>
+    <footer>
+    <a href="https://ihpcloud.com/NewUser?referredBy=7dd20a19-773d-4727-a682-f10b078b3da0">
+        <img src="https://ihpcloud.com/deployed-with-ihp-cloud-blue.svg" alt="Deployed with IHP Cloud" height="80px" width="100%"/>
+    </a>
+    </footer>
+
 </body>
 |]
 
