@@ -22,6 +22,7 @@ renderForm coffee = formFor coffee [hsx|
     {textField #labels}
     {selectField #coffeeType coffeetypes}
     {dateField #createdAt}
+    {dateField #lastDrank}
     {submitButton}
 |]
     where 

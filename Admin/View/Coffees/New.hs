@@ -15,6 +15,7 @@ renderForm coffee = formFor coffee [hsx|
     { textField #title }
     { (textareaField #body) {helpText = "(markdown enabled.)"} }
     { selectField #coffeeType coffeetypes }
+    { dateField #createdAt }
     { dateField #lastDrank }
     { submitButton }
 |]
