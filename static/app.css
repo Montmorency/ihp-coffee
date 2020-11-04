@@ -15,6 +15,13 @@ h1, h2, h3, h4, h5 {
     color: #073642;
 }
 
+.full-bleed {
+    width: 100%;
+    grid-column: 1/4;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .coffee, .new-comment, .comment, .topic {
     max-width: 660px;
 }
