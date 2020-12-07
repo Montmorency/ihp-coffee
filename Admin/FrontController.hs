@@ -1,10 +1,10 @@
 module Admin.FrontController where
-import IHP.RouterPrelude
-import IHP.ControllerSupport
-import Generated.Types
+import Admin.Controller.Prelude
 import Admin.Types
+import Admin.View.Layout (defaultLayout)
 
 -- Controller Imports
+import Admin.Controller.Prelude
 import Admin.Controller.Admins
 import Admin.Controller.Coffees
 import IHP.Welcome.Controller
@@ -20,6 +20,9 @@ instance FrontController AdminApplication where
         ]
 
 instance InitControllerContext AdminApplication where
-    initContext = initAuthentication @Admin
+    initContext = do
+        setLayout defaultLayout 
+        initAuthentication @Admin
+
         
 

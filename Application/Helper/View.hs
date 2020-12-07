@@ -12,6 +12,7 @@ import IHP.LoginSupport.Helper.View
 
 import qualified Text.MMark as MMark
 import Text.MMark.Extension.GhcSyntaxHighlighter
+import Generated.Types
 
 
 renderMarkdown text =
@@ -25,8 +26,8 @@ renderMarkdown text =
                 |> preEscapedToHtml
 
 
-currentAdmin :: (?viewContext :: viewContext, HasField "admin" viewContext (Maybe admin)) => admin
+currentAdmin :: forall admin.(?context::ControllerContext, Typeable admin, admin ~ Admin) => admin
 currentAdmin = fromMaybe (error "Application.Helper.View.currentAdmin: Not logged in") currentAdminOrNothing
 
-currentAdminOrNothing :: (?viewContext :: viewContext, HasField "admin" viewContext (Maybe admin)) => Maybe admin
-currentAdminOrNothing = getField @"admin" ?viewContext 
+currentAdminOrNothing :: forall admin.(?context::ControllerContext, Typeable admin, admin ~ Admin) => Maybe admin
+currentAdminOrNothing = fromFrozenContext @(Maybe Admin) 

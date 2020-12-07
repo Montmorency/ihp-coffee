@@ -3,7 +3,7 @@ import Web.View.Prelude
 
 data IndexView = IndexView { coffees :: [Coffee] }
 
-instance View IndexView ViewContext where
+instance View IndexView  where
     html IndexView { .. } = [hsx|
         <h1>Coffees <a href={pathTo NewCoffeeAction} class="btn btn-primary ml-4">+ New</a></h1>
         <div class="coffees">{forEach coffees renderCoffee}</div>

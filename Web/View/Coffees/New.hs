@@ -4,7 +4,7 @@ import Data.Data
 
 data NewView = NewView { coffee :: Coffee }
 
-instance View NewView ViewContext where
+instance View NewView  where
     html NewView { .. } = [hsx|
         <h1>New Coffee</h1>
         {renderForm coffee}

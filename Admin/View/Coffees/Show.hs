@@ -4,7 +4,7 @@ import Web.Controller.Static
 
 data ShowView = ShowView { coffee :: Coffee }
 
-instance View ShowView ViewContext where
+instance View ShowView where
     html ShowView { .. } = [hsx|
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">

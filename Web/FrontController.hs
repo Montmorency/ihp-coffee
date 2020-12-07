@@ -1,8 +1,7 @@
 module Web.FrontController where
-import IHP.RouterPrelude
-import IHP.ControllerSupport
-import Generated.Types
-import Web.Types
+
+import Web.Controller.Prelude
+import Web.View.Layout (defaultLayout)
 
 -- Controller Imports
 import Web.Controller.Comments
@@ -20,4 +19,6 @@ instance FrontController WebApplication where
         , parseRoute @StaticController
         ]
 
-instance InitControllerContext WebApplication
+instance InitControllerContext WebApplication where
+    initContext = do
+            setLayout defaultLayout
