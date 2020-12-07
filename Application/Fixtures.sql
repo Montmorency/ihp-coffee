@@ -219,7 +219,7 @@ ensureIsAdmin =
         Just _ -> pure ()
         Nothing -> redirectToLoginWithMessage (newSessionUrl (Proxy :: Proxy admin))
 ```
-If the user is logged in as Admin we have purity and the IO consumes a unit and moves on. If there is no Admin logged in the client is redirected to the newSessionUrl which is typically just a login page. The `newSessionUrl` method was defined (as you''ll see in the documentation) in when you made your `Admin` data type an instance of `HasNewSessionUrl`:
+If the user is logged in as Admin we have purity and the IO consumes a unit and moves on. If there is no Admin logged in the client is redirected to the newSessionUrl which is typically just a login page. The `newSessionUrl` method was defined (as you''ll see in the documentation) when you made your `Admin` data type an instance of `HasNewSessionUrl`:
 
 ```haskell
 instance HasNewSessionUrl Admin where
@@ -612,6 +612,270 @@ class HasField x r a | x r -> a where
 
 from `GHC.Records`. This constraint ties in with the `OverloadedRecordFields` language extension.
 Records and dot syntax seem to be a bit of a philosophical rabbit hole for Haskellers so a little googling will take you into some pretty heated discussion forums. Fortunately in IHP all you need to worry about is how to `get`, `set` and `modify`.   ', 'Record, get, set, modify', '2020-10-30 12:46:24.486412+00', 'americano', '1858-11-17');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('210beb5e-1191-49cf-b4e9-bd0fb0aacb99', 'Param-bulators, Call the Parambulance!', 'Let us go type hunting today. We wish to understand everything that happens when we write: 
+
+```
+let 
+     username = param "username"
+```
+
+in an IHP controller.
+
+This espresso will involve listing type signatures and very little exposition; so here goes:
+
+```
+param :: (?context :: RequestContext) => (ParamReader valueType) => ByteString -> valueType
+param !name = case paramOrNothing name of
+    Just value -> Either.fromRight (error (paramParserErrorMessage name)) (readParameter value)
+    Nothing -> Exception.throw (ParamNotFoundException name)
+```
+
+Ok some exposition, `ParamReader` is a a type class with a `readParameter` operator that lets you specify how you want to map whatever `ByteString` comes at you over the wire to another data type e.g. `Text,Double,Int,[values]` etc. 
+
+`param` is calling `paramOrNothing`:
+
+```
+paramOrNothing :: (?context :: RequestContext) => ParamReader a => ByteString -> Maybe a
+paramOrNothing !name = case queryOrBodyParam name of
+    Just value -> case readParameter value of
+        Left error -> Nothing
+        Right value -> Just value
+    Nothing -> Nothing
+```
+
+Ok, good, so that is just unpacking `Maybe` s and `Either` s. Let us keep going `queryOrBodyParam`:
+
+```
+queryOrBodyParam :: (?context :: RequestContext) => ByteString -> Maybe ByteString
+queryOrBodyParam !name = join (lookup name allParams)
+```
+
+So `queryOrBodyParams` is a function accessing `allParams` params that are parsed out of the URL and that could be passed in a request body (say from a Form):
+
+```
+allParams :: (?context :: RequestContext) => [(ByteString, Maybe ByteString)]
+allParams = concat [(map (\(a, b) -> (a, Just b)) params), (Wai.queryString request)]
+    where
+        RequestContext { request, params } = ?context
+```
+
+IHP''s ubiquitous and helpful `?context` implicit parameter is holding some queries and `Wai.queryString request` is holding the rest. Will we keep going? Yes...
+
+What''s Wai doing? Ok 
+
+```
+module Network.Wai.Internal where
+     import qualified Network.HTTP.Types           as H
+
+queryString          :: H.Query
+```
+
+So `queryString`  has type `H.Query` (which if we look that up is just a type synonym for `[(B.ByteString, Maybe B.ByteString)]`, which makes sense  because we have `keys` and `Maybe values` and they are all `ByteStrings` until they get IHP `readParameter` "ed". 
+
+Right, good that''s enough for a short, sharp, punchy espresso we can look into Wai parsing strategies another day. 
+', '', '2020-11-04 12:54:55.239264+00', 'espresso', '2020-11-16');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('eb000f34-d9c4-410c-8629-a5b0c118b33b', 'IHP has it: Under Control', 'Can you remember when IHP had a module like `Web/View/Context.hs`? And it defined ViewContext as an instance of ViewSupport.CreateViewContext? And it defined some type synonyms and bound `FlashMessages` to your `ViewContext` and you could also extend that ViewContext record to include more data like the current User etc.? No? 
+
+Well. Good. Because it''s gone now. 
+
+The whole `ViewContext/ControllerContext` structure has been rationalized into a single implicit parameter `?context` with type `ControllerContext` (defined in `IHP.ControllerSupport`) to the great benefit of reduced syntactic clutter across the whole IHP framework. It is a development to be celebrated. 
+
+This is the data type:
+
+```
+data ControllerContext = ControllerContext { requestContext :: RequestContext, customFieldsRef :: IORef TypeMap.TMap }
+                       | FrozenControllerContext { requestContext :: RequestContext, customFields :: TypeMap.TMap }
+```
+
+(A Historical Note: These structures were introduced when the `FrameworkConfig` type class was refactored into a record data type).
+
+Let''s see how it might work in practice. 
+
+Here is an example (straight from the top brass at IHP HQ;) of the sort of thing you may like to do with your implicit `?context` parameter. 
+
+Take language settings as an example. Say you were interested in spinning out a cool IHP app for your english and... perhaps, Norwegian speaking customers. You could accomplish this by defining a Language data type, 
+
+```
+data Language = No | En
+
+setLanguage :: (?context :: ControllerContext) => Language -> IO ()
+setLanguage language = putContext language
+```
+
+Now in your `Controller`:
+
+```
+action MyAction = do
+    setLanguage No
+```
+
+And now your view can access these data fields with `fromFrozenContext` safely:
+
+```
+currentLanguage :: (?context :: ControllerContext) => Language
+currentLanguage = fromFrozenContext @Language
+```', '', '2020-11-16 14:42:39.623771+00', 'americano', '2020-11-17');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('0efd3f73-45bd-401e-95f0-a49f8dc54ccf', 'The Frames', 'Let''s have a quick look at the `FrameworkConfig` data structure. 
+
+```
+data FrameworkConfig = FrameworkConfig 
+    { appHostname :: Text
+    , environment :: Environment
+    , appPort :: Int
+    , baseUrl :: Text
+    -- | Provides IHP with a middleware to log requests and responses.
+    -- By default this uses the RequestLogger middleware from wai-extra. Take a look at the wai-extra
+    -- documentation when you want to customize the request logging.
+    -- See https://hackage.haskell.org/package/wai-extra-3.0.29.2/docs/Network-Wai-Middleware-RequestLogger.html
+    -- Set @requestLoggerMiddleware = \application -> application@ to disable request logging.
+    , requestLoggerMiddleware :: Middleware
+    -- | Provides the default settings for the session cookie.
+    -- - Max Age: 30 days
+    -- - Same Site Policy: Lax
+    -- - HttpOnly (no access through JS)
+    -- - secure, when baseUrl is a https url
+    -- Override this to set e.g. a custom max age or change the default same site policy.
+    -- > sessionCookie = defaultIHPSessionCookie { Cookie.setCookieMaxAge = Just (fromIntegral (60 * 60 * 24 * 90)) }
+    , sessionCookie :: Cookie.SetCookie
+    , mailServer :: MailServer
+    , databaseUrl :: ByteString 
+    -- | How long db connection are kept alive inside the connecton pool when they''re idle
+    , dbPoolIdleTime :: NominalDiffTime
+    -- | Max number of db connections the connection pool can open to the database
+    , dbPoolMaxConnections :: Int
+    -- Override this if you use a CSS framework that is not bootstrap
+    , cssFramework :: CSSFramework
+}
+```
+
+We can add options to the ConfigEnvironment which can be thought of as a map of (Key,Value) pairs using
+the `option` function:
+
+```
+option :: forall option. Typeable option => option -> State.StateT TMap.TMap IO ()
+option value = State.modify (\map -> if TMap.member @option map then map else TMap.insert value map)
+```
+
+So, for example, if you have a look at `Config/Config.hs` you will see:
+
+```
+config :: ConfigBuilder
+config = do
+        option Development
+        option (AppHostname "localhost")
+```
+
+(This makes use of the type synonym: `type ConfigBuilder = State.StateT TMap.TMap IO ()`).
+Where the Development and Apphostname data types are being dropped into our Config environment.
+
+The inverse of `option` is `findOption`:
+
+```
+findOption :: forall option. Typeable option => State.StateT TMap.TMap IO option
+findOption = do
+    options <- State.get
+    options
+        |> TMap.lookup @option
+        |> fromMaybe (error $ "Could not find " <> show (Typeable.typeOf (undefined :: option)))
+        |> pure
+```
+
+These structures and functions are worth a look at because the whole IHP party starts of when you `run` the server with the lines:
+
+```
+run :: (FrontController RootApplication) => ConfigBuilder -> IO ()
+run configBuilder = do
+    frameworkConfig@(FrameworkConfig { environment, appPort, dbPoolMaxConnections, dbPoolIdleTime, databaseUrl, sessionCookie, requestLoggerMiddleware }) <- buildFrameworkConfig configBuilder
+```
+
+So having some idea of what is going on here will get us off on the right foot. 
+', '', '2020-11-17 10:31:35.841355+00', 'espresso', '2020-11-20');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('27bf79af-baf3-4029-a4b2-63d9262d3c6f', 'Java, JavaScript, XCafe, CoffeeScript; Is the Computer/Caffeine Motif Getting Tired? No, We Just Need More Coffee!', 'Standard IHP integrates a few javascript packages: JQuery, Morphdom, and TurboLinks amongst them. We''ll skip the intro to JQuery and mention what TurboLinks and Morphdom are about. Some document fetching and parsing yields the following:
+
+Turbolinks Docs
+```
+Turbolinks® makes navigating your web application faster. Get the performance benefits of a single-page application without the added complexity of a client-side JavaScript framework. Use HTML to render your views on the server side and link to pages as usual. When you follow a link, Turbolinks automatically fetches the page, swaps in its <body>, and merges its <head>, all without incurring the cost of a full page load.
+```
+
+Morphdom Docs
+```
+This module was created to solve the problem of updating the DOM in response to a UI component or page being rerendered. One way to update the DOM is to simply toss away the existing DOM tree and replace it with a new DOM tree (e.g., myContainer.innerHTML = newHTML). While replacing an existing DOM tree with an entirely new DOM tree will actually be very fast, it comes with a cost. The cost is that all of the internal state associated with the existing DOM nodes (scroll positions, input caret positions, CSS transition states, etc.) will be lost. Instead of replacing the existing DOM tree with a new DOM tree we want to transform the existing DOM tree to match the new DOM tree while minimizing the number of changes to the existing DOM tree. This is exactly what the morphdom module does! Give it an existing DOM node tree and a target DOM node tree and it will efficiently transform the existing DOM node tree to exactly match the target DOM node tree with the minimum amount of changes.
+```
+
+So that gives us some idea what those modules are up to. Now in `lib/IHP/static/helpers.js` you''ll find a bit of the behind the scenes magic. For instance this block of javascript:
+
+```
+document.addEventListener(''DOMContentLoaded'', function () {
+    initDelete();
+    initDisableButtonsOnSubmit();
+    initBack();
+    initToggle();
+    initTime();
+    initDatePicker();
+    initFileUploadPreview();
+});
+```
+
+So, for instance, when you see a link with the `js-delete` class in IHP, its the `initDelete()` javascript function in the `helpers.js` which catches the click on the link, turns it into a form with a `POST` request and does all that `XMLHttpRequest()` stuff that might get annoying to do yourself after a while.
+
+Now this configuration works very (very) well if we are purely rendering html markup. Scroll bars don''t go jumping around text doesn''t swap in and out only small changes in the page state get updates and it feels seamless. Troubles may start though when we leave the purity of haskell rendering html and start grafting our own `<script>...</script>` tags throughout the innerHtml. Handling this may require a little more consideration.', 'Javascript', '2020-11-25 10:25:10.09803+00', 'americano', '1800-11-01');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('d45de61c-bb2e-47c5-b8e8-ce5537a0276b', 'Ice Cold Authenticity', 'Of immense use to any `IHP`er is the family of  `currentUserOrNothing`, `currentAdminOrNothing` functions. With IHP''s rationalized `?context` parameter we would like to see how the sessions get initialized and the currently logged in user types gets passed around with the `?context`.  The logic is collected together in `IHP.LoginSupport...`.
+
+The top level function that takes care of authentication is `initAuthentication`. 
+
+Which you pack in to your FrontController Logic:
+
+```
+initContext = setLayout defaultLayout >=> initAuthentication @User
+```
+
+The `initAuthentication` function is to be found in `IHP.LoginSupport.Middleware`:
+
+```haskell
+initAuthentication :: forall user.
+        ( ?context :: ControllerContext
+        , ?modelContext :: ModelContext
+    ) => IO ()
+initAuthentication = do
+    user <- getSessionUUID (sessionKey @user)
+            >>= pure . fmap (Newtype.pack @(Id user))
+            >>= fetchOneOrNothing
+    putContext user
+```
+
+(I''ve dropped a number of the additional constraints on this `initAuthentication` signature as they relate to constraints on the records fields). When your session is initialized IHP makes a little note on the client''s cookie jar. `getSessionUUID` fetches the key from the cookie jar packs it into the cooke jar, fetches the user record from the database and pushes the user into the `(?context)` parameter (which is basically a `[key,value]` map of `[Types, Values]`). 
+
+Here''s what `putContext` looks like:
+
+```haskell
+putContext :: forall value. (?context :: ControllerContext, Typeable value) => value -> IO ()
+putContext value = do
+    let ControllerContext { customFieldsRef } = ?context
+    modifyIORef customFieldsRef (TypeMap.insert value)
+    pure ()
+```
+
+Then in your Controller (or View if you "freeze" the context with some modifications) you can access the current `user` with:
+
+```
+currentUserOrNothing :: forall user. (?context :: ControllerContext, HasNewSessionUrl user, Typeable user, user ~ CurrentUserRecord) => (Maybe user)
+currentUserOrNothing = case unsafePerformIO (maybeFromContext @(Maybe user)) of
+    Just user -> user
+    Nothing -> error "currentUserOrNothing: initAuthentication @User has not been called in initContext inside FrontController of this application"
+```
+
+
+where the "freezing" comes in:
+
+```haskell
+maybeFromContext :: forall value. (?context :: ControllerContext, Typeable value) => IO (Maybe value)
+maybeFromContext = do
+    frozen <- freeze ?context
+    let ?context = frozen
+    pure (maybeFromFrozenContext @value)
+```
+
+', 'Authentication, Authorization', '2020-11-17 11:48:42.919111+00', 'americano', '2020-11-25');
 
 
 ALTER TABLE public.coffees ENABLE TRIGGER ALL;
