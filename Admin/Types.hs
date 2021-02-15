@@ -37,3 +37,14 @@ data AdminsController
     | UpdateAdminAction { adminId :: !(Id Admin) }
     | DeleteAdminAction { adminId :: !(Id Admin) }
     deriving (Eq, Show, Data)
+
+data NixCoffeesController
+    = NixCoffeesAction
+    | TodaysNixCoffeeAction 
+    | NewNixCoffeeAction
+    | ShowNixCoffeeAction { nixCoffeeId :: !(Id NixCoffee) }
+    | CreateNixCoffeeAction
+    | EditNixCoffeeAction { nixCoffeeId :: !(Id NixCoffee) }
+    | UpdateNixCoffeeAction { nixCoffeeId :: !(Id NixCoffee) }
+    | DeleteNixCoffeeAction { nixCoffeeId :: !(Id NixCoffee) }
+    deriving (Eq, Show, Data)

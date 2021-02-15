@@ -15,6 +15,68 @@ h1, h2, h3, h4, h5 {
     color: #073642;
 }
 
+.ft-size-24 {
+    font-size: 24px;
+}
+
+.ft-size-20 {
+    font-size:20px;
+}
+
+.ft-size-18 {
+    font-size:18px;
+}
+
+.ft-size-14 {
+    font-size:14px;
+}
+
+
+.wrapper {
+  display: grid;
+  grid-template-columns:
+    1fr
+    min(65ch, 100%)
+    1fr;
+}
+
+.wrapper > * {
+  grid-column: 2;
+}
+.full-bleed {
+  width: 100%;
+  grid-column: 1 / 4;
+}
+
+.coffee-content {
+    line-height=1.7;
+}
+
+.example-container {
+  width: 800px;
+  @include make-container();
+}
+
+.mw-450-px {
+    max-width: 450px;        
+    }
+.st-james-street {
+    height: 0;             /* collapse the container's height */
+    width: 100%;    /* specify any width you want (a percentage value, basically) */
+    /* apply a padding using the following formula */
+    /* this formula makes sure the aspect ratio of the container equals that of the svg graphic */
+    padding-top: 400%; /* (237 / 212) * width-value;*/
+    position: relative;    /* create positioning context for svg */
+    } 
+
+iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .full-bleed {
     width: 100%;
     grid-column: 1/4;

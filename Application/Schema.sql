@@ -33,5 +33,14 @@ CREATE TABLE admins (
     failed_login_attempts INT DEFAULT 0 NOT NULL,
     name TEXT NOT NULL
 );
+CREATE TABLE nix_coffees (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
+    title TEXT DEFAULT '' NOT NULL,
+    body TEXT DEFAULT '' NOT NULL,
+    labels TEXT DEFAULT '' NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    last_drank DATE NOT NULL,
+    coffee_type coffeetypes NOT NULL
+);
 ALTER TABLE comments ADD CONSTRAINT comments_ref_coffee_id FOREIGN KEY (coffee_id) REFERENCES coffees (id) ON DELETE NO ACTION;
 ALTER TABLE comments ADD CONSTRAINT comments_ref_user_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE NO ACTION;

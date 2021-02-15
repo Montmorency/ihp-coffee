@@ -47,3 +47,13 @@ data StaticController
     = StJamesStreetAction
         deriving (Eq, Show, Data)
 
+data NixCoffeesController
+    = ShowNixCoffeeAction { nixCoffeeId :: !(Id NixCoffee) }
+    | TodaysNixCoffeeAction 
+{--    | NixCoffeesAction
+    | NewNixCoffeeAction
+    | CreateNixCoffeeAction
+    | EditNixCoffeeAction { nixCoffeeId :: !(Id NixCoffee) }
+    | UpdateNixCoffeeAction { nixCoffeeId :: !(Id NixCoffee) }
+    | DeleteNixCoffeeAction { nixCoffeeId :: !(Id NixCoffee) } --}
+    deriving (Eq, Show, Data)

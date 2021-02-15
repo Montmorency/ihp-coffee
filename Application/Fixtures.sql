@@ -39,7 +39,7 @@ data RequestContext = RequestContext
 ```
 
 When a type signature for an IHP function has a constraint`(?requestContext::RequestContext)` you know it holds references
-to the wai request, request parameters, file uploads etc.', 'Implicit Parameters', '2020-09-24 14:26:40.761952+01', 'espresso', '2020-10-06');
+to the wai request, request parameters, file uploads etc.', 'Implicit Parameters', '2020-09-24 13:26:40.761952+00', 'espresso', '2020-10-06');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('f8b9f3a0-84ec-46b1-aab7-3dd1d47a11f8', 'Mos Def Not Think So', 'There is a Haskell module called Data.Default which defines
 a type class:
 ```haskell
@@ -73,7 +73,7 @@ data MetaBag = MetaBag
   } deriving (Eq, Show)
 ```
 
-Defaults make it easy to populate a new record''s data fields in the database without worrying about writing a lot of boilerplate.', 'records, models, defaults', '2020-09-24 14:31:56.476449+01', 'irish_coffee', '2020-10-01');
+Defaults make it easy to populate a new record''s data fields in the database without worrying about writing a lot of boilerplate.', 'records, models, defaults', '2020-09-24 13:31:56.476449+00', 'irish_coffee', '2020-10-01');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('79e20290-1885-472b-97fd-1e3f3be2059d', 'PostGres ENUM and Select Fields.', 'In a relational database a row entry might have a field with values that are restricted to a small set of options. For instance we might have a Cafe that only serves certain Types of Coffee ( we are capitalizing names that will form the data in a computer program). For accounting purposes the Cafe wants to log each sale with a Type of Coffee value selected from an enumerated list. PostgresSQL supports just such an enumerated data type. It is called an `ENUM` and a table entry might look like this:
 
 ```
@@ -112,7 +112,7 @@ coffeetypes :: [Coffeetype]
 coffeetypes =  [Americano, Latte, IrishCoffee, Cappuccino,
                          Espresso, FlatWhite, Glace, Lungo,
                          EspressoRomano, IcedCoffee, Marochino, Freddo, Mocha]
-```', 'ENUM, selectfields, Forms', '2020-09-23 21:02:55.999273+01', 'latte', '2020-09-23');
+```', 'ENUM, selectfields, Forms', '2020-09-23 20:02:55.999273+00', 'latte', '2020-09-23');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('e22b478c-0ae4-41d0-85bd-577ac2932d7d', 'Filling Forms MetaFormically ', 'The `fill` function takes care of populating multiple fields in a record at once. In your controller logic you will often have helper functions like:
 
 ```
@@ -138,7 +138,7 @@ instance FillParams (''[]) record where
 ```
 
 `FillParams` accepts two type parameters: a list of type level names `''[]` and a `record`. It also expects the `?requestContext` implicit parameter which is available in all IHP actions, and, finally, the constraints require our record has a `meta` field. In IHP the `meta` record field holds a `MetaBag` data type. This bag gives IHP a way of tracking problems with a form. A user might get most of the form "right" like provide a name, an address, etc., but they may not give a valid email address. The `MetaBag` contains the ''annotations''; basically, a place to stores notes on what went wrong (or what has been changed) so that the form can be passed back to the user with the correct fields still correct and the problematic fields highlighted. Have a look through `IHP.Controller.Param` for more details!
-', 'forms, Metabag', '2020-09-29 13:56:29.021352+01', 'lungo', '2020-10-09');
+', 'forms, Metabag', '2020-09-29 12:56:29.021352+00', 'lungo', '2020-10-09');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('c82c853a-2a2f-462c-910f-e7a723077015', 'Admiral Admin', 'Learning how IHP works has the added benefit of making
 some of our ideas about Haskell more concrete.
 Let us look at how `LoginSupport` works in IHP.
@@ -204,7 +204,7 @@ is coming from a valid Administrator and, if it doesn''t, it will redirect to th
 page if it is not.
 
 These kind of patterns make factoring permission based Views in your IHP application
-simple to implement and secure.', 'Admin, Sessions', '2020-09-30 10:45:45.176187+01', 'freddo', '2020-10-08');
+simple to implement and secure.', 'Admin, Sessions', '2020-09-30 09:45:45.176187+00', 'freddo', '2020-10-08');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('c7353f29-3502-4595-b56a-42462c8a3dff', 'Automatic Sessions', 'IHP gives support for handling User sessions and authentication straight out of the box. The documentation describes the details. Here we''ll just do a quick dive into what happens behind the scenes when you have an IHP Controller instance defined like this:
 
 ```haskell
@@ -226,7 +226,7 @@ instance HasNewSessionUrl Admin where
     newSessionUrl admin = "/NewSession"
 ```
 
-The way the controller logic and implicit parameters are handled and connected to Views in IHP makes standard authorization/authentication patterns very concise for the programmer to write. ', 'Sessions', '2020-09-28 13:51:37.428757+01', 'americano', '2020-10-07');
+The way the controller logic and implicit parameters are handled and connected to Views in IHP makes standard authorization/authentication patterns very concise for the programmer to write. ', 'Sessions', '2020-09-28 12:51:37.428757+00', 'americano', '2020-10-07');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('bbd05ccc-5c09-48e2-a336-a6870ce6cbea', 'Validation', 'Here is  a typical use case of `ifValid` in a Controller action creating a new record:
 
 ```haskell
@@ -278,7 +278,7 @@ ifValid branch model = branch ((if null annotations then Right else Left) model)
 
 We have our branch function which will point us `Right`  if our model has `null annotations`(These are the validation notes that IHP stores on all our models in a field called `MetaBag`) or `Left` if one of the validation functions has not been passed. 
 
-The `validateField` functions are what mark the model''s `annotations` card. `ifValid` then decides if it the model is worthy of going into the app database or the client must go back and try submitting the form again. ', '', '2020-10-09 15:36:38.710404+01', 'mocha', '2020-10-09');
+The `validateField` functions are what mark the model''s `annotations` card. `ifValid` then decides if it the model is worthy of going into the app database or the client must go back and try submitting the form again. ', '', '2020-10-09 14:36:38.710404+00', 'mocha', '2020-10-09');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('56d2fa89-349e-4da6-8501-43af331f2bf4', 'Fetch Me... Nothing.', 'Let us look at some common patterns that we might encounter in an IHP request cycle. Let us say that our database contains some site addresses stored as `Address` data. In our application we may want to let the user query an address; if the database contains the address return it; otherwise return a blank record.  Here is some `Controller action` code that would handle this (the `Address` data are assumed to have a field called `siteId` in this example):
 
 ```haskell
@@ -319,7 +319,7 @@ renderAddress Just address =  [hsx| <p> {address} </p> |]
 
 The considerations boil down to whether we prefer a View that changes depending on the data it receives or a static View which receives fixed data determined by the `Controller` logic. 
 
-IHP raises many interesting philosophical questions of this nature: just another one of its many excellent features.', 'fetch, views, fetchOneOrNothing', '2020-10-08 13:30:33.509801+01', 'flat_white', '2020-10-12');
+IHP raises many interesting philosophical questions of this nature: just another one of its many excellent features.', 'fetch, views, fetchOneOrNothing', '2020-10-08 12:30:33.509801+00', 'flat_white', '2020-10-12');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('edb8cfe4-b59e-4a36-a3e8-dc329012e7aa', 'Second Sessions', 'Let us take another, closer, look at that authorization/login tools provided by IHP. The place to start is the IHP documentation and the documentation starts with the `IHP.LoginSupport.Helper.Controller`. 
 
 The standard pattern for an application in IHP is to have `Users` and `Admins`. There are helper functions like `currentUser` and `currentAdmin` which themselves call `currentUserOrNothing` and `currentAdminOrNothing`. The latter functions have a return type of `Maybe User` or `Maybe Admin`. 
@@ -362,69 +362,7 @@ which are all to be found in `IHP.AuthSupport.Controller.Sessions`. Of these the
                      Nothing (i.e. no user/admin record with that email) -> Send them to sign up.
 ```
 
-It is also useful to add an entry to the `ViewContext` record that holds`currentUserOrNothing/currentAdminOrNothing` record so that you have simple access to this data in all your `Views`. ', 'Authorization, Login, Sessions', '2020-10-12 13:08:12.126225+01', 'marochino', '2020-10-13');
-INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('210beb5e-1191-49cf-b4e9-bd0fb0aacb99', 'Param-bulators, Call the Parambulance!', 'Let us go type hunting today. We wish to understand everything that happens when we write: 
-
-```
-let 
-     username = param "username"
-```
-
-in an IHP controller.
-
-This espresso will involve listing type signatures and very little exposition; so here goes:
-
-```
-param :: (?context :: RequestContext) => (ParamReader valueType) => ByteString -> valueType
-param !name = case paramOrNothing name of
-    Just value -> Either.fromRight (error (paramParserErrorMessage name)) (readParameter value)
-    Nothing -> Exception.throw (ParamNotFoundException name)
-```
-
-Ok some exposition, `ParamReader` is a a type class with a `readParameter` operator that lets you specify how you want to map whatever `ByteString` comes at you over the wire to another data type e.g. `Text,Double,Int,[values]` etc. 
-
-`param` is calling `paramOrNothing`:
-
-```
-paramOrNothing :: (?context :: RequestContext) => ParamReader a => ByteString -> Maybe a
-paramOrNothing !name = case queryOrBodyParam name of
-    Just value -> case readParameter value of
-        Left error -> Nothing
-        Right value -> Just value
-    Nothing -> Nothing
-```
-
-Ok, good, so that is just unpacking `Maybe` s and `Either` s. Let us keep going `queryOrBodyParam`:
-
-```
-queryOrBodyParam :: (?context :: RequestContext) => ByteString -> Maybe ByteString
-queryOrBodyParam !name = join (lookup name allParams)
-```
-
-So `queryOrBodyParams` is a function accessing `allParams` params that are parsed out of the URL and that could be passed in a request body (say from a Form):
-
-```
-allParams :: (?context :: RequestContext) => [(ByteString, Maybe ByteString)]
-allParams = concat [(map (\(a, b) -> (a, Just b)) params), (Wai.queryString request)]
-    where
-        RequestContext { request, params } = ?context
-```
-
-IHP''s ubiquitous and helpful `?context` implicit parameter is holding some queries and `Wai.queryString request` is holding the rest. Will we keep going? Yes...
-
-What''s Wai doing? Ok 
-
-```
-module Network.Wai.Internal where
-     import qualified Network.HTTP.Types           as H
-
-queryString          :: H.Query
-```
-
-So `queryString`  has type `H.Query` (which if we look that up is just a type synonym for `[(B.ByteString, Maybe B.ByteString)]`, which makes sense  because we have `keys` and `Maybe values` and they are all `ByteStrings` until they get IHP `readParameter` "ed". 
-
-Right, good that''s enough for a short, sharp, punchy espresso we can look into Wai parsing strategies another day. 
-', '', '2020-11-04 12:54:55.239264+00', 'espresso', '2020-11-16');
+It is also useful to add an entry to the `ViewContext` record that holds`currentUserOrNothing/currentAdminOrNothing` record so that you have simple access to this data in all your `Views`. ', 'Authorization, Login, Sessions', '2020-10-12 12:08:12.126225+00', 'marochino', '2020-10-13');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('4efdf15c-bf68-4bd2-8a9f-538a440010f8', 'Include Me', 'A SQL record may well have foreign keys on it. These relationships are in the Schema for a reason and frequently we may want to present the data from different related records in a single view. For instance let us take an example from the IHP Forum. We have a thread, which is some markdown text discussing some new fascinating IHP related feature, and we want to associate the name of the user who has contributed this pearl of wisdom, and also the name of the topic that the thread has been filed under. 
 
 The IndexView of threads is itself a record defined like this:
@@ -488,7 +426,7 @@ SELECT * FROM topics WHERE id IN (?)
 ```
 
 So with `collectionFetchRelated` and `Include''` we can well, fetch related records... and include them in our view! Who said naming things was hard?
-', 'Include, collectionFetchRelated ', '2020-10-12 19:37:06.96898+01', 'mocha', '2020-10-14');
+', 'Include, collectionFetchRelated ', '2020-10-12 18:37:06.96898+00', 'mocha', '2020-10-14');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('57451821-29e3-44d2-b103-205a74acefca', 'Lights Camera, action', 'Lets have a look at an `action` in IHP. This is a method introduced by the `Controller` type class:
 
 ```
@@ -503,7 +441,7 @@ It acts as a place holder so that when the App gets a request IHP can pattern ma
 
 The action is where the action happens so you can hang anything you want on it: a simple do that renders a view or complicated sequence of database queries and analysis. 
 
-', 'action, Controller', '2020-10-15 13:53:37.659863+01', 'espresso', '2020-10-16');
+', 'action, Controller', '2020-10-15 12:53:37.659863+00', 'espresso', '2020-10-16');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('2c4d7424-8e70-42a5-adcb-2f45be134f64', 'Behind The IHP Fridge', 'For today''s coffee we will suggest a few stops on a self-guided tour of the IHP Developer tools. These tools are the part of the IHP package, essentially an IHP application itself, which allow you to develop your own IHP applications.
 
 The first module (stop) on the tour is `IHP.IDE.ToolServer.Types`. This may look very familiar. It has essentially the same layout as you would expect in your Application''s `Web/Types.hs` module. Instead of your application/business data structures this modules defines *the abstract data structures of your application/business data structures* ; `SchemaController`, `TablesController`, `ColumnController` etc. We''re going up to the source of the Nile here; deeper into the jungle of abstraction. These IHP `ToolServer` data types have been designed to make it easy to generate your more application specific data types. You might wonder that if we journey far enough up the river whether we will find some abstract source of all abstract data structures; a generator of IHP Application generators perhaps? We should be careful with such speculations. We don''t want to put web developers out of work.
@@ -512,7 +450,7 @@ The next stop on the tour is `IHP.IDE.LiveReloadNotificationServer`. The reality
 
 Let us have a quick look at the`ihp/exe/IHP/IDE/DevServer.hs` script. This runs along in the background while you are developing your application. It is a `forever` (see the definition of `forever` in Control.Monad) script. That means the script potters along accepting messages from the App running in your Browser as a client, it propagates the DevApp State, sends messages to the browser telling it to refresh on any changes, and if you are in Debug Mode (entered by running the `./start` script with an environment variable e.g. `DEBUG=1 ./start`) it prints status info to the terminal to give you an idea what it is doing. It does this forever or until you unplug your computer or hit Ctrl-C. 
 
-The DevServer design is quite concise considering all that it enables. ', 'Devserver', '2020-10-14 12:11:07.262344+01', 'lungo', '2020-10-15');
+The DevServer design is quite concise considering all that it enables. ', 'Devserver', '2020-10-14 11:11:07.262344+00', 'lungo', '2020-10-15');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('11367669-5542-49cb-8d72-23c91e6e1a3d', 'Let''s Put This In Context', 'It''s another Mocha today; we''re talking Hot Chocolate, Cream, Marshmallows, Coffee, the works. Maybe someday we''ll get back to serving short sharp espressos but in these autumn months (that is, the months when this is being written not necessarily read) we have time to sip our drinks leisurely. 
 
 We''re going to look at a part of IHP that is involved in both Authentication and LiveReloading. We''re going to put things in context. And to put things in context we need a context. I mean we need to initialize a context so enter stage right `initContext`:
@@ -576,7 +514,7 @@ do b <- bs a
    cs b
 ```
 
-Fin.', 'initControllerContext', '2020-10-16 13:40:44.778269+01', 'mocha', '2020-10-19');
+Fin.', 'initControllerContext', '2020-10-16 12:40:44.778269+00', 'mocha', '2020-10-19');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('e25edc82-2e84-429f-b201-21e6a4b5d199', 'IHP''s Nix Ecosystem', 'IHP as it is (currently) called stands for `Integrated Haskell Platform`. It is a Platform because you can design rocket ship applications that blast off from it, and it is integrated because, I''m just guessing here, but, because its tools are intimately integrated with the Haskell ecosystem.
 
 IHP manages all the various environmental and module dependencies that can arise when you are developing an application that requires postgres, ghc, and an arbitrary configuration of new, old, and non-standard packages, by using `nix`. We can take as `nix` as referring to a language, an operating system, a build tool and package manager depending on the context and what is its most appropriate name given the context. 
@@ -617,7 +555,7 @@ The call to `stdenv.mkDerivation{ }` comes from `ihp/NixSupport/default.nix`. It
 (We''ll also mention that the final `.nix` formula also pulls in the special formulae you may have defined in `./Config/nix/haskell-packages/`. These usually come from wanting an older version of a package then the one provided for by the IHP package set. They  are generated using `cabal2nix` see the IHP docs `Advanced: Using a Different Version of a Haskell Package`.)
 
 Looking through them in more detail will give you an idea of how IHP approaches package management and brings everything together so that you can run your application by typing `./start`.
-', 'nix', '2020-10-19 13:30:08.308049+01', 'americano', '2020-10-30');
+', 'nix', '2020-10-19 12:30:08.308049+00', 'americano', '2020-10-30');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('c2392fec-1159-4037-9bf8-0ad16917d76e', 'Ready, set, get, Vinyl Record!', 'Defining a record data type in Haskell is handy because we get a set of functions that can access the fields of the record. One problem though is if we have two different records with the same field name those function definitions are going to clash. 
 
 For instance:
@@ -674,6 +612,68 @@ class HasField x r a | x r -> a where
 
 from `GHC.Records`. This constraint ties in with the `OverloadedRecordFields` language extension.
 Records and dot syntax seem to be a bit of a philosophical rabbit hole for Haskellers so a little googling will take you into some pretty heated discussion forums. Fortunately in IHP all you need to worry about is how to `get`, `set` and `modify`.   ', 'Record, get, set, modify', '2020-10-30 12:46:24.486412+00', 'americano', '1858-11-17');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('210beb5e-1191-49cf-b4e9-bd0fb0aacb99', 'Param-bulators, Call the Parambulance!', 'Let us go type hunting today. We wish to understand everything that happens when we write: 
+
+```
+let 
+     username = param "username"
+```
+
+in an IHP controller.
+
+This espresso will involve listing type signatures and very little exposition; so here goes:
+
+```
+param :: (?context :: RequestContext) => (ParamReader valueType) => ByteString -> valueType
+param !name = case paramOrNothing name of
+    Just value -> Either.fromRight (error (paramParserErrorMessage name)) (readParameter value)
+    Nothing -> Exception.throw (ParamNotFoundException name)
+```
+
+Ok some exposition, `ParamReader` is a a type class with a `readParameter` operator that lets you specify how you want to map whatever `ByteString` comes at you over the wire to another data type e.g. `Text,Double,Int,[values]` etc. 
+
+`param` is calling `paramOrNothing`:
+
+```
+paramOrNothing :: (?context :: RequestContext) => ParamReader a => ByteString -> Maybe a
+paramOrNothing !name = case queryOrBodyParam name of
+    Just value -> case readParameter value of
+        Left error -> Nothing
+        Right value -> Just value
+    Nothing -> Nothing
+```
+
+Ok, good, so that is just unpacking `Maybe` s and `Either` s. Let us keep going `queryOrBodyParam`:
+
+```
+queryOrBodyParam :: (?context :: RequestContext) => ByteString -> Maybe ByteString
+queryOrBodyParam !name = join (lookup name allParams)
+```
+
+So `queryOrBodyParams` is a function accessing `allParams` params that are parsed out of the URL and that could be passed in a request body (say from a Form):
+
+```
+allParams :: (?context :: RequestContext) => [(ByteString, Maybe ByteString)]
+allParams = concat [(map (\(a, b) -> (a, Just b)) params), (Wai.queryString request)]
+    where
+        RequestContext { request, params } = ?context
+```
+
+IHP''s ubiquitous and helpful `?context` implicit parameter is holding some queries and `Wai.queryString request` is holding the rest. Will we keep going? Yes...
+
+What''s Wai doing? Ok 
+
+```
+module Network.Wai.Internal where
+     import qualified Network.HTTP.Types           as H
+
+queryString          :: H.Query
+```
+
+So `queryString`  has type `H.Query` (which if we look that up is just a type synonym for `[(B.ByteString, Maybe B.ByteString)]`, which makes sense  because we have `keys` and `Maybe values` and they are all `ByteStrings` until they get IHP `readParameter` "ed". 
+
+Right, good that''s enough for a short, sharp, punchy espresso we can look into Wai parsing strategies another day. 
+', '', '2020-11-04 12:54:55.239264+00', 'espresso', '2020-11-16');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('eb000f34-d9c4-410c-8629-a5b0c118b33b', 'IHP has it: Under Control', 'Can you remember when IHP had a module like `Web/View/Context.hs`? And it defined ViewContext as an instance of ViewSupport.CreateViewContext? And it defined some type synonyms and bound `FlashMessages` to your `ViewContext` and you could also extend that ViewContext record to include more data like the current User etc.? No? 
 
 Well. Good. Because it''s gone now. 
@@ -715,81 +715,63 @@ And now your view can access these data fields with `fromFrozenContext` safely:
 currentLanguage :: (?context :: ControllerContext) => Language
 currentLanguage = fromFrozenContext @Language
 ```', '', '2020-11-16 14:42:39.623771+00', 'americano', '2020-11-17');
-INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('0efd3f73-45bd-401e-95f0-a49f8dc54ccf', 'The Frames', 'Let''s have a quick look at the `FrameworkConfig` data structure. 
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('515f482a-f607-4252-b2c1-60a843a7cb89', 'Papa''s Got a Brand New MetaBag', 'Lets say you wish to copy an IHP record into a new record and insert that into a table. Maybe the use case is you are cacheing some record and when a new user comes along you want to reuse most of the data in that record with a couple superficial changes without going through the trouble of regenerating all of that record''s fields. Your first attempt might look like:
 
 ```
-data FrameworkConfig = FrameworkConfig 
-    { appHostname :: Text
-    , environment :: Environment
-    , appPort :: Int
-    , baseUrl :: Text
-    -- | Provides IHP with a middleware to log requests and responses.
-    -- By default this uses the RequestLogger middleware from wai-extra. Take a look at the wai-extra
-    -- documentation when you want to customize the request logging.
-    -- See https://hackage.haskell.org/package/wai-extra-3.0.29.2/docs/Network-Wai-Middleware-RequestLogger.html
-    -- Set @requestLoggerMiddleware = \application -> application@ to disable request logging.
-    , requestLoggerMiddleware :: Middleware
-    -- | Provides the default settings for the session cookie.
-    -- - Max Age: 30 days
-    -- - Same Site Policy: Lax
-    -- - HttpOnly (no access through JS)
-    -- - secure, when baseUrl is a https url
-    -- Override this to set e.g. a custom max age or change the default same site policy.
-    -- > sessionCookie = defaultIHPSessionCookie { Cookie.setCookieMaxAge = Just (fromIntegral (60 * 60 * 24 * 90)) }
-    , sessionCookie :: Cookie.SetCookie
-    , mailServer :: MailServer
-    , databaseUrl :: ByteString 
-    -- | How long db connection are kept alive inside the connecton pool when they''re idle
-    , dbPoolIdleTime :: NominalDiffTime
-    -- | Max number of db connections the connection pool can open to the database
-    , dbPoolMaxConnections :: Int
-    -- Override this if you use a CSS framework that is not bootstrap
-    , cssFramework :: CSSFramework
-}
+existingRecord < query @Model
+                  |> filterWhere (#someField, someValue)
+                  |> fetchOneOrNothing
+... 
+case existingRecord of
+      Nothing -> createRecordNormally
+      (Just someSite) -> do
+                          someSite <- someSite 
+                                           |> set #someField "smallChange" 
+                                           |> createRecord
 ```
 
-We can add options to the ConfigEnvironment which can be thought of as a map of (Key,Value) pairs using
-the `option` function:
+That should just update the "someField" Column and leave all the other columns filled with the useful data that was already stored in the record right? Right? 
+
+Of course not. You have forgotten the `MetaBag`. 
+
+In `ihp/IHP/ModelSupport.hs` the `MetaBag` is used for tracking changes to a record. This is very useful when we want to do tricks with Form Validation. Here is the MetaBag data structure:
 
 ```
-option :: forall option. Typeable option => option -> State.StateT TMap.TMap IO ()
-option value = State.modify (\map -> if TMap.member @option map then map else TMap.insert value map)
+data MetaBag = MetaBag
+  { annotations :: [(Text, Text)]
+  , touchedFields :: [Text]
+  } deriving (Eq, Show)
 ```
 
-So, for example, if you have a look at `Config/Config.hs` you will see:
+Some helper functions access the `MetaBag` so we can check when fields are modified:
 
-```
-config :: ConfigBuilder
-config = do
-        option Development
-        option (AppHostname "localhost")
-```
-
-(This makes use of the type synonym: `type ConfigBuilder = State.StateT TMap.TMap IO ()`).
-Where the Development and Apphostname data types are being dropped into our Config environment.
-
-The inverse of `option` is `findOption`:
-
-```
-findOption :: forall option. Typeable option => State.StateT TMap.TMap IO option
-findOption = do
-    options <- State.get
-    options
-        |> TMap.lookup @option
-        |> fromMaybe (error $ "Could not find " <> show (Typeable.typeOf (undefined :: option)))
-        |> pure
+```haskell
+didChangeRecord :: (HasField "meta" record MetaBag) => record -> Bool
+didChangeRecord record =
+    record
+    |> get #meta
+    |> get #touchedFields
+    |> isEmpty
 ```
 
-These structures and functions are worth a look at because the whole IHP party starts of when you `run` the server with the lines:
+
+As we saw one consequence of this comes when copying a record. If the fields of our newRecord are untouched (as recorded by the MetaBag) the default values will populate them. 
+
+The solution is to set every field of the copied record to the value of the original record. This can be accomplished using new record and a lot of boilerplate:
 
 ```
-run :: (FrontController RootApplication) => ConfigBuilder -> IO ()
-run configBuilder = do
-    frameworkConfig@(FrameworkConfig { environment, appPort, dbPoolMaxConnections, dbPoolIdleTime, databaseUrl, sessionCookie, requestLoggerMiddleware }) <- buildFrameworkConfig configBuilder
+copiedRecord <- newRecord @Site
+    |> set #fieldA (get #fieldA originalRecord)
+    |> set #fieldB (get #fieldB originalRecord)
+    ...
 ```
 
-So having some idea of what is going on here will get us off on the right foot. 
-', '', '2020-11-17 10:31:35.841355+00', 'espresso', '2020-11-20');
+In time there might be a SYB solution like this:
+
+```
+let copiedRecord = newRecord @Site
+                                           |> copyFields @["fieldA", "fieldB"] otherSite
+```', '', '2021-01-08 14:10:25.829369+00', 'flat_white', '2021-02-09');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('d45de61c-bb2e-47c5-b8e8-ce5537a0276b', 'Ice Cold Authenticity', 'Of immense use to any `IHP`er is the family of  `currentUserOrNothing`, `currentAdminOrNothing` functions. With IHP''s rationalized `?context` parameter we would like to see how the sessions get initialized and the currently logged in user types gets passed around with the `?context`.  The logic is collected together in `IHP.LoginSupport...`.
 
 The top level function that takes care of authentication is `initAuthentication`. 
@@ -876,63 +858,6 @@ document.addEventListener(''DOMContentLoaded'', function () {
 So, for instance, when you see a link with the `js-delete` class in IHP, its the `initDelete()` javascript function in the `helpers.js` which catches the click on the link, turns it into a form with a `POST` request and does all that `XMLHttpRequest()` stuff that might get annoying to do yourself after a while.
 
 Now this configuration works very (very) well if we are purely rendering html markup. Scroll bars don''t go jumping around text doesn''t swap in and out only small changes in the page state get updates and it feels seamless. Troubles may start though when we leave the purity of haskell rendering html and start grafting our own `<script>...</script>` tags throughout the innerHtml. Handling this may require a little more consideration.', 'Javascript', '2020-11-25 10:25:10.09803+00', 'americano', '2020-12-16');
-INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('515f482a-f607-4252-b2c1-60a843a7cb89', 'Papa''s Got a Brand New MetaBag', 'Lets say you wish to copy an IHP record into a new record and insert that into a table. Maybe the use case is you are cacheing some record and when a new user comes along you want to reuse most of the data in that record with a couple superficial changes without going through the trouble of regenerating all of that record''s fields. Your first attempt might look like:
-
-```
-existingRecord < query @Model
-                  |> filterWhere (#someField, someValue)
-                  |> fetchOneOrNothing
-... 
-case existingRecord of
-      Nothing -> createRecordNormally
-      (Just someSite) -> do
-                          someSite <- someSite 
-                                           |> set #someField "smallChange" 
-                                           |> createRecord
-```
-
-That should just update the "someField" Column and leave all the other columns filled with the useful data that was already stored in the record right? Right? 
-
-Of course not. You have forgotten the `MetaBag`. 
-
-In `ihp/IHP/ModelSupport.hs` the `MetaBag` is used for tracking changes to a record. This is very useful when we want to do tricks with Form Validation. Here is the MetaBag data structure:
-
-```
-data MetaBag = MetaBag
-  { annotations :: [(Text, Text)]
-  , touchedFields :: [Text]
-  } deriving (Eq, Show)
-```
-
-Some helper functions access the `MetaBag` so we can check when fields are modified:
-
-```haskell
-didChangeRecord :: (HasField "meta" record MetaBag) => record -> Bool
-didChangeRecord record =
-    record
-    |> get #meta
-    |> get #touchedFields
-    |> isEmpty
-```
-
-
-As we saw one consequence of this comes when copying a record. If the fields of our newRecord are untouched (as recorded by the MetaBag) the default values will populate them. 
-
-The solution is to set every field of the copied record to the value of the original record. This can be accomplished using new record and a lot of boilerplate:
-
-```
-copiedRecord <- newRecord @Site
-    |> set #fieldA (get #fieldA originalRecord)
-    |> set #fieldB (get #fieldB originalRecord)
-    ...
-```
-
-In time there might be a SYB solution like this:
-
-```
-let copiedRecord = newRecord @Site
-                                           |> copyFields @["fieldA", "fieldB"] otherSite
-```', '', '2021-01-08 14:10:25.829369+00', 'flat_white', '1800-01-01');
 INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('e7a8a434-beeb-498e-aa8a-a64e966e3fef', 'The IHP Environment', 'Programming in Haskell is always enjoyable. After an afternoon of coding the programmer should feel relaxed. In much the same way they might be if they had just been to a Russian sauna sipping on vodka and snacking on salted fish. The developer experience experience can be enhanced with the constantly improving haskell-language-server and ghcide (ghc- integrated development environment). New users to the nix/IHP framework who have suffered before building ghc and the haskell-language server from scratch and by hand may be pleasantly surprised by the way language support works out of the box. 
 
 The magic is to be found in the `build/ihp-lib/.hie-bios` file of your IHP project.
@@ -957,6 +882,227 @@ With `<nixpkgs>` and the `digitally-induced cachix` you can quickly build a pinp
 The IHP `Makefile` provides a build rule `make print-ghc-options`, which outputs all the required language extension flags, and `module include paths` you can populate the `.hie-bios` with all the flags and relative `libdirs` required to satisfy the `haskell-language-server`. With a satisfied language server the task is then to pick your favourite editor (which simply requires some reflection and soul searching on the part of the user). 
 
 Once the text editor has been chosen it can be configured it to link with the haskell language server and derive the benefits of editor prompted code completion, type signatures, hlints, import warnings, and syntax highlighting.', '', '2020-12-16 15:07:45.08429+00', 'espresso', '2021-01-08');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('0efd3f73-45bd-401e-95f0-a49f8dc54ccf', 'The Frames', 'Let''s have a quick look at the `FrameworkConfig` data structure. 
+
+```
+data FrameworkConfig = FrameworkConfig 
+    { appHostname :: Text
+    , environment :: Environment
+    , appPort :: Int
+    , baseUrl :: Text
+    -- | Provides IHP with a middleware to log requests and responses.
+    -- By default this uses the RequestLogger middleware from wai-extra. Take a look at the wai-extra
+    -- documentation when you want to customize the request logging.
+    -- See https://hackage.haskell.org/package/wai-extra-3.0.29.2/docs/Network-Wai-Middleware-RequestLogger.html
+    -- Set @requestLoggerMiddleware = \application -> application@ to disable request logging.
+    , requestLoggerMiddleware :: Middleware
+    -- | Provides the default settings for the session cookie.
+    -- - Max Age: 30 days
+    -- - Same Site Policy: Lax
+    -- - HttpOnly (no access through JS)
+    -- - secure, when baseUrl is a https url
+    -- Override this to set e.g. a custom max age or change the default same site policy.
+    -- > sessionCookie = defaultIHPSessionCookie { Cookie.setCookieMaxAge = Just (fromIntegral (60 * 60 * 24 * 90)) }
+    , sessionCookie :: Cookie.SetCookie
+    , mailServer :: MailServer
+    , databaseUrl :: ByteString 
+    -- | How long db connection are kept alive inside the connecton pool when they''re idle
+    , dbPoolIdleTime :: NominalDiffTime
+    -- | Max number of db connections the connection pool can open to the database
+    , dbPoolMaxConnections :: Int
+    -- Override this if you use a CSS framework that is not bootstrap
+    , cssFramework :: CSSFramework
+}
+```
+
+We can add options to the ConfigEnvironment which can be thought of as a map of (Key,Value) pairs using
+the `option` function:
+
+```
+option :: forall option. Typeable option => option -> State.StateT TMap.TMap IO ()
+option value = State.modify (\map -> if TMap.member @option map then map else TMap.insert value map)
+```
+
+So, for example, if you have a look at `Config/Config.hs` you will see:
+
+```
+config :: ConfigBuilder
+config = do
+        option Development
+        option (AppHostname "localhost")
+```
+
+(This makes use of the type synonym: `type ConfigBuilder = State.StateT TMap.TMap IO ()`).
+Where the Development and Apphostname data types are being dropped into our Config environment.
+
+The inverse of `option` is `findOption`:
+
+```
+findOption :: forall option. Typeable option => State.StateT TMap.TMap IO option
+findOption = do
+    options <- State.get
+    options
+        |> TMap.lookup @option
+        |> fromMaybe (error $ "Could not find " <> show (Typeable.typeOf (undefined :: option)))
+        |> pure
+```
+
+These structures and functions are worth a look at because the whole IHP party starts of when you `run` the server with the lines:
+
+```
+run :: (FrontController RootApplication, Job.Worker RootApplication) => ConfigBuilder -> IO ()
+run configBuilder = do
+    frameworkConfig <- buildFrameworkConfig configBuilder
+```
+
+So having some idea of what is going on here will get us off on the right foot. 
+', '', '2020-11-17 10:31:35.841355+00', 'espresso', '2020-11-20');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('bcadd2fe-64ea-45fb-8137-60ab9a10b926', 'What are my Options?', 'The `./Config` module is where all configuration settings can be conveniently set. Often you''ll want to hang API/authentication keys here, and set what mode your application is in etc. 
+ 
+```
+module Config where
+
+config :: ConfigBuilder
+config = do
+    option Development
+    option (AppHostname "localhost")
+    option $ SES
+        {
+          accessKey = "BEZJOSFFE"
+        , secretKey = "cHUMEgoDnioC!"
+        , region = "eu-west-1" 
+        }
+```
+
+In a view these options are made accessible by freezing a "Type dictionary".  Each `option DataConstructor` call is adding a new key:value to the implicit `?context` variable. The `?context` variable is passed to all your views under the hood (implicitly). 
+
+Besides this extensible dictionary of option Types there is also the core `FrameworkConfig` record. This data structure contains standard structures that all applications will need e.g. the `baseUrl`, `databaseUrl`, `cssFramework`. There is a nice utility function : 
+
+```
+fromConfig :: (?context :: context, ConfigProvider context) => (FrameworkConfig -> a) -> a
+    fromConfig selector = (selector . getFrameworkConfig) ?context
+``` 
+
+where `selector` accesses one of the fields of the `FrameworkConfig` record. So if you need to grab your app''s production URL (say you are sending an automated email with a link to the site) at any point you can access it as:
+
+```
+[hsx| The site is hosted <a href={fromConfig baseUrl}> here </a>. |]
+```
+', '', '2021-02-10 10:50:41.054875+00', 'espresso', '1800-01-01');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('9b008877-eb6f-442f-b08a-cb637e9e8c29', 'Du Hast IHP-Mail', 'Let''s say that you are a young and aspiring merchant of books named Megan and you need to compete with a new start up book merchant named Tom. Tom has a "Website" on the "Internet" where "Users" can create an account and then order books. You have a plan to one up his application. When "People" (you (quite rightly) prefer not to refer to your customers as "users") sign up to your website you are going to automatically send that Person an email. Hopefully this feature will run Tom out of business and leave you as the sole proprietor of books in the region. 
+
+IHP can help. 
+
+The following pattern follows a few of the usual steps for incorporating common application features with IHP. We''ll look at the configuration and the data types required to start automatically sending emails. 
+
+We''ll do some configuration first in `Config.hs`:
+
+```
+import IHP.Mail
+
+config :: ConfigBuilder
+config = do
+    -- other options here, then add:
+    option $ SMTP
+        { host = "smtp.myisp.com"
+        , port = 2525
+        , credentials = Just ("megan", "nottheonefromthatfilm")
+        }
+```
+
+SMTP stands for Simple Mail Transfer Protocol.  In the `Config.hs` `SMTP` is a constructor of the
+`MailServer` data type defined in `IHP.Mail.Types`: 
+
+```
+data MailServer =
+    -- | Uses AWS SES for sending emails
+    SES { accessKey :: ByteString
+        , secretKey :: ByteString
+        --  | E.g. @"us-east-1"@ or @"eu-west-1"@
+        , region :: Text }
+    -- | Uses the local Sendmail binary for sending emails. Avoid this with IHP Cloud
+    | Sendmail
+    -- | Uses SendGrid for sending emails
+    | SendGrid { apiKey :: Text
+               , category :: Maybe Text }
+    -- | Uses a generic SMTP for sending emails
+    | SMTP { host :: String
+           , port :: PortNumber
+           -- (Username,Password) combination
+           , credentials :: Maybe (String, String)}
+```
+
+As you can see there are a number of email configurations you can choose from depending on 
+the mailserver you want to use. You (Megan) might consider putting in a pull request for an AOL configuration.
+
+Internally, IHP uses many of the utility functions for sending mail
+are imported from the  `Network.Mail.SMTP` package on hackage.
+
+Now you (still Megan) want to customize your emails based on some of the details 
+that the person signing up has given so you define a record type: 
+
+```
+data ConfirmationMail = ConfirmationMail { person :: Person, offer :: Offer}
+```
+
+Then you make that record type an instance of the `BuildMail` type class from `IHP.Mail`:
+
+```
+class BuildMail mail where
+    -- | You can use @?mail@ to make this dynamic based on the given entity
+    subject :: (?mail :: mail) => Text
+    
+    -- | The email receiver
+    --
+    -- __Example:__
+    -- > to ConfirmationMail { .. } = Address { addressName = Just (get #name user), addressEmail = get #email user }
+    to :: mail -> Address
+
+    -- | Your sender address
+    from :: (?mail :: mail) => Address
+
+    -- | Similiar to a normal html view, HSX can be used here
+    html :: (?context :: context, ConfigProvider context) => mail -> Html
+
+    -- | When no plain text version of the email is specified it falls back to using the html version but striping out all the html tags
+    text :: (?context :: context, ConfigProvider context) => mail -> Text
+    text mail = stripTags (cs $ Blaze.renderHtml (html mail))
+```
+
+This type class brings in to scope all the utility functions required for setting the subject, address, and content of the email:
+ 
+```
+instance BuildMail ConfirmationMail where
+    subject = "Subject"
+    to ConfirmationMail { .. } = Address { addressName = Just "Tom", addressEmail = "tom@booksale.ie" }
+    from = "megthebookseller@aol.com"
+    html ConfirmationMail { .. } = [hsx|
+        <span class="greetings"> Dear {get #name person} <span>,
+        <div> You may be interested in the following books: {renderOffer offer}. </div> ...
+    |]
+```
+
+Finally you update your Controllers to fire the the email off:
+
+```
+action NewPersonAction { personId } = do
+    person <- fetch personId
+    offer <- fetchOne @Offer
+    sendMail ConfirmationMail { person, offer }
+```
+
+Which fetches the person and that month''s offers list and sends the email. 
+
+Good luck Megan!', 'mail', '2021-01-28 16:08:19.974935+00', 'mocha', '2021-02-10');
+INSERT INTO public.coffees (id, title, body, labels, created_at, coffee_type, last_drank) VALUES ('7859679b-0f24-4c70-8b81-2041503287e6', 'My Nixxy Valentine', 'Today''s iced coffee is all about IHP and nix. And like all stories it is a love story. We have discussed nix before in general terms but as IHP has rounded off its edges and streamlined its deployment it is worth taking another look at the way the  build is expressed. 
+
+We begin in the ihp-boilerplate application layout. Let''s assume in what follows we have run an `ihp-new ihp-nix` to generate a new IHP application. We will follow the expressions required to build the project. 
+
+```
+
+```
+
+p.s. If you notice a delay when you run `nix-shell` each time you are launching your application it is because nix is re-evaluating the whole expression each time you load your environment. Its supposed to do that! As nix flakes become the norm users will be able to cache the build results. ', '', '2021-02-12 16:33:23.884009+00', 'iced_coffee', '1858-11-17');
 
 
 ALTER TABLE public.coffees ENABLE TRIGGER ALL;

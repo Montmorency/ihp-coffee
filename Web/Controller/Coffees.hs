@@ -7,7 +7,6 @@ import Web.View.Coffees.Show
 --import Web.View.Coffees.New
 --import Web.View.Coffees.Edit
 
-
 instance Controller CoffeesController where
 
     action TodaysCoffeeAction  = do

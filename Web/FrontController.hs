@@ -4,6 +4,7 @@ import Web.Controller.Prelude
 import Web.View.Layout (defaultLayout)
 
 -- Controller Imports
+import Web.Controller.NixCoffees
 import Web.Controller.Comments
 import Web.Controller.Users
 import Web.Controller.Coffees
@@ -14,8 +15,9 @@ import IHP.LoginSupport.Middleware
 
 instance FrontController WebApplication where
     controllers = 
-        [ startPage TodaysCoffeeAction
+        [ startPage StJamesStreetAction
         , parseRoute @CoffeesController
+        , parseRoute @NixCoffeesController
         , parseRoute @StaticController
         ]
 

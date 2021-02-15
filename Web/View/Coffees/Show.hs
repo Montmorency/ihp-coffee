@@ -11,11 +11,12 @@ instance View ShowView  where
                 <li class="breadcrumb-item active" aria-current="page">IHP Cafe</li>
             </ol>
         </nav>
-        <div class="row thread">
-            <div class="col-3 coffee-col">
+        <div class="container">
+        <div class="row pl-4">
+            <div class="col-md-3 coffee-col">
                   <img src={(tshow (get #coffeeType coffee)) <> ".svg"}/>
             </div>
-            <div class="col-9">
+            <div class="coffee-content col-9 col-md-6">
                 <div class="text-muted thread-created-at">
                     {get #lastDrank coffee}
                 </div>
@@ -23,6 +24,7 @@ instance View ShowView  where
                 <p class="coffee-body">{get #body coffee |> renderMarkdown}</p>
             </div>
         </div>
+      </div>
     |]
 
 -- <object data= {(tshow (get #coffeeType coffee)) <> ".svg"} type="image/svg+xml"> </object>

@@ -7,6 +7,7 @@ import Admin.View.Layout (defaultLayout)
 import Admin.Controller.Prelude
 import Admin.Controller.Admins
 import Admin.Controller.Coffees
+import Admin.Controller.NixCoffees
 import IHP.Welcome.Controller
 import IHP.LoginSupport.Middleware
 import Admin.Controller.Sessions
@@ -15,6 +16,7 @@ instance FrontController AdminApplication where
     controllers = 
         [ startPage CoffeesAction
         , parseRoute @CoffeesController
+        , parseRoute @NixCoffeesController
         , parseRoute @SessionsController
         , parseRoute @AdminsController
         ]
