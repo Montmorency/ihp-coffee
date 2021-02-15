@@ -52,12 +52,17 @@ scripts = do
         <script src="/vendor/popper.min.js"></script>
         <script src="/vendor/bootstrap.min.js"></script>
         <script src="/vendor/flatpickr.js"></script>
-        <script src="/vendor/morphdom-umd.min.js"></script>
-        <script src="/helpers.js"></script>
     |]
     when isProduction [hsx|
-        <script src="/prod.js"></script>
+        <script src="/vendor/jquery-3.2.1.slim.min.js"></script>
+        <script src="/vendor/timeago.js"></script>
+        <script src="/vendor/popper.min.js"></script>
+        <script src="/vendor/bootstrap.min.js"></script>
+        <script src="/vendor/flatpickr.js"></script>
     |]
+     --   <script src="/vendor/morphdom-umd.min.js"></script>
+     --   <script src="/helpers.js"></script>
+     --   <script src="/prod.js"></script>
 
 metaTags :: Html
 metaTags = [hsx|

@@ -5,8 +5,10 @@ data StJamesStreetView = StJamesStreetView
 instance View StJamesStreetView where
     html StJamesStreetView = [hsx|
                                   <div class="wrapper">
-                                    <iframe class="full-bleed" src="StJamesStreet.svg"></iframe> 
+                                      <object type="image/svg+xml" data="StJamesStreet.svg"></object>
                                   </div>
                               |]
-    --html StJamesStreetView = [hsx|<object type="image/svg+xml" data="StJamesStreet.svg"></object>|]
+    -- html StJamesStreetView = 
+    -- <object type="image/svg+xml" data="StJamesStreet.svg"></object>
+    -- <iframe class="full-bleed" src="StJamesStreet.svg"></iframe> 
 

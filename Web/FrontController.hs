@@ -16,8 +16,8 @@ import IHP.LoginSupport.Middleware
 instance FrontController WebApplication where
     controllers = 
         [ startPage StJamesStreetAction
-        , parseRoute @CoffeesController
         , parseRoute @NixCoffeesController
+        , parseRoute @CoffeesController
         , parseRoute @StaticController
         ]
 

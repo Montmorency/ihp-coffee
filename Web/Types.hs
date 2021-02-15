@@ -45,6 +45,7 @@ data CommentsController
 
 data StaticController
     = StJamesStreetAction
+    | RefreshStreetView
         deriving (Eq, Show, Data)
 
 data NixCoffeesController

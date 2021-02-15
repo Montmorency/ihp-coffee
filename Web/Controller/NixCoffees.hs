@@ -9,7 +9,6 @@ instance Controller NixCoffeesController where
         nixCoffee <- query @ NixCoffee
             |> orderBy #lastDrank
             |> fetchOne
-
         nixCoffees <- query @NixCoffee |> fetch
 
         render ShowView { .. }
