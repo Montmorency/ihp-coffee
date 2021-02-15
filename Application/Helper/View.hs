@@ -31,3 +31,5 @@ currentAdmin = fromMaybe (error "Application.Helper.View.currentAdmin: Not logge
 
 currentAdminOrNothing :: forall admin.(?context::ControllerContext, Typeable admin, admin ~ Admin) => Maybe admin
 currentAdminOrNothing = fromFrozenContext @(Maybe Admin) 
+
+
