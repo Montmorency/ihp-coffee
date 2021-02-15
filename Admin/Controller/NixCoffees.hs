@@ -7,6 +7,8 @@ import Admin.View.NixCoffees.Edit
 import Admin.View.NixCoffees.Show
 
 instance Controller NixCoffeesController where
+    beforeAction = ensureIsAdmin @Admin
+
     action NixCoffeesAction = do
         nixCoffees <- query @NixCoffee |> fetch
         render IndexView { .. }
